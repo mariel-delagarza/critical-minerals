@@ -32,4 +32,34 @@
 		font-weight: bold;
 		font-size: 1.5rem;
 	}
+
+  @media (max-width: 1900px) {
+    .element {
+      width: 3rem;
+      height: 3rem;
+    }
+
+    .number {
+      font-size: 0.8rem;
+    }
+
+    .symbol {
+      font-size: 1.2rem;
+    }
+  }
+  @media (max-width: 1500px) {
+    .element {
+      width: 3rem;
+      height: 3rem;
+    }
+
+    .number {
+      font-size: 0.7rem;
+    }
+
+    .symbol {
+      font-size: 1rem;
+    }
+  }
+
 </style>

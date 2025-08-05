@@ -59,13 +59,13 @@
 	}
 
 	:global(.periodic-table) {
-		flex: 1 1 65%;
+		flex: 1 1 0;
 		min-width: 300px;
 		outline: 2px dashed red;
 	}
 
 	:global(.detail-panel) {
-		flex: 0 1 35%;
+		flex: 1 1 0;
 		min-width: 250px;
 		outline: 2px dashed red;
 	}
