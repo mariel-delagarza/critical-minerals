@@ -1,95 +1,110 @@
 <script>
-  import Filters from '$lib/components/Filters.svelte';
-  import Legend from '$lib/components/Legend.svelte';
-  import PeriodicTable from '$lib/components/PeriodicTable.svelte';
-  import DetailPanel from '$lib/components/DetailPanel.svelte';
-  import { onMount } from 'svelte';
-  import {getData} from '$lib/data.js'; // Assuming you have a data fetching function
+	import Filters from '$lib/components/Filters.svelte';
+	import Legend from '$lib/components/Legend.svelte';
+	import PeriodicTable from '$lib/components/PeriodicTable.svelte';
+	import DetailPanel from '$lib/components/DetailPanel.svelte';
+	import { onMount } from 'svelte';
+	import { getData } from '$lib/data.js'; // Assuming you have a data fetching function
 
-  let rawData = [];
+	let rawData = [];
 
-  onMount(async () => {
-    rawData = await getData();
-    console.log("Fetched data in Main component:", rawData); // <--- should be full array
-  });
+	onMount(async () => {
+		rawData = await getData();
+		console.log('Fetched data in Main component:', rawData); // <--- should be full array
+	});
 
-  $: data = rawData
+	$: data = rawData;
 </script>
 
 <div class="main-layout">
-  <div class="top-row">
-    <Filters />
-    <Legend />
-  </div>
+	<div class="top-row">
+		<Filters />
+		<Legend />
+	</div>
 
-  <div class="content-row">
-    <PeriodicTable {data} />
-    <DetailPanel />
-  </div>
+	<div class="content-row">
+		<PeriodicTable {data} />
+		<DetailPanel />
+	</div>
 </div>
 
 <style>
-  .main-layout {
-    display: flex;
-    flex-direction: column;
-    padding: 1rem;
-    gap: 1rem;
-  }
+	:global(html) {
+		box-sizing: border-box;
+	}
 
-  .top-row {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 1rem;
-  }
+	:global(*),
+	:global(*::before),
+	:global(*::after) {
+		box-sizing: inherit;
+	}
+	:global(body) {
+    font-family: "Roboto", sans-serif;
+		margin: 0;
+		/* overflow: hidden; */
+		background: #d2d0d0;
+	}
+	.main-layout {
+		display: flex;
+		flex-direction: column;
+		padding: 1rem;
+		gap: 1rem;
+	}
 
-  .content-row {
-    display: flex;
-    flex-direction: row;
-    gap: 2rem;
-    align-items: flex-start;
-    flex-wrap: wrap;
-  }
+	.top-row {
+		display: flex;
+		justify-content: space-between;
+		flex-wrap: wrap;
+		gap: 1rem;
+	}
 
-  :global(.periodic-table) {
-    flex: 2 1 60%;
-    min-width: 300px;
-    outline: 2px dashed red;
-  }
+	.content-row {
+		display: flex;
+		flex-direction: row;
+		gap: 2rem;
+		align-items: flex-start;
+		flex-wrap: wrap;
+	}
 
-  :global(.detail-panel) {
-    flex: 1 1 35%;
-    min-width: 250px;
-    outline: 2px dashed red;
-  }
+	:global(.periodic-table) {
+		flex: 2 1 60%;
+		min-width: 300px;
+		outline: 2px dashed red;
+	}
 
-  :global(.filters) {
-    display: none;
-  }
+	:global(.detail-panel) {
+		flex: 1 1 35%;
+		min-width: 250px;
+		outline: 2px dashed red;
+	}
 
-  :global(.legend) {
-    margin-left: auto;
-    outline: 2px dashed red;
-  }
+	:global(.filters) {
+		display: none;
+	}
 
-  /* Mobile styles */
-  @media (max-width: 768px) {
-    .content-row {
-      flex-direction: column;
-    }
+	:global(.legend) {
+		margin-left: auto;
+		outline: 2px dashed red;
+	}
 
-    :global(.filters) {
-      display: block;
-      outline: 2px dashed red;
-    }
+	/* Mobile styles */
+	@media (max-width: 768px) {
+		.content-row {
+			flex-direction: column;
+		}
 
-    :global(.periodic-table),
-    :global(.detail-panel) {
-      flex: 1 1 100%;
-    }
+		:global(.filters) {
+			display: block;
+			outline: 2px dashed red;
+		}
 
-    :global(.legend) {
-      margin-left: 0;
-    }
-  }
+		:global(.periodic-table),
+		:global(.detail-panel) {
+			flex: 1 1 100%;
+		}
+
+		:global(.legend) {
+			margin-left: 0;
+		}
+	}
 </style>
