@@ -27,8 +27,4 @@
     gap: 0.25rem;
     padding: 1rem;
   }
-
-  .cell {
-    /* Optional: add spacing if needed */
-  }
 </style>
