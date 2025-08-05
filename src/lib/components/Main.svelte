@@ -21,7 +21,6 @@
 		<Filters />
 		<Legend />
 	</div>
-
 	<div class="content-row">
 		<PeriodicTable {data} />
 		<DetailPanel />
@@ -39,11 +38,12 @@
 		box-sizing: inherit;
 	}
 	:global(body) {
-    font-family: "Roboto", sans-serif;
+		font-family: 'Roboto', sans-serif;
 		margin: 0;
 		/* overflow: hidden; */
 		background: #d2d0d0;
 	}
+
 	.main-layout {
 		display: flex;
 		flex-direction: column;

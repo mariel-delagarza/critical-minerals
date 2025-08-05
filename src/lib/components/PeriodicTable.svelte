@@ -26,5 +26,6 @@
     grid-template-rows: repeat(10, auto);
     gap: 0.25rem;
     padding: 1rem;
+    outline: 1px solid blue;
   }
 </style>
