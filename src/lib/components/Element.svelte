@@ -15,8 +15,8 @@
 		align-items: center;
 		justify-content: center;
 		font-size: 0.85rem;
-		width: 3rem;
-		height: 3rem;
+		width: 5rem;
+		height: 5rem;
 		border: 1px solid #ccc;
 		text-align: center;
 		background-color: white;
@@ -24,12 +24,12 @@
 	}
 
 	.number {
-		font-size: 0.6rem;
+		font-size: 1rem;
 		color: #666;
 	}
 
 	.symbol {
 		font-weight: bold;
-		font-size: 1rem;
+		font-size: 1.5rem;
 	}
 </style>
