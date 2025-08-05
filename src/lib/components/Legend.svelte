@@ -9,4 +9,10 @@
     max-width: 50%;
     width: 100%;
   }
+
+  @media (max-width: 1250px) {
+    #legend {
+      max-width: 100%;
+    }
+  }
 </style>
