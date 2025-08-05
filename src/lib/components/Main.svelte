@@ -3,6 +3,17 @@
   import Legend from '$lib/components/Legend.svelte';
   import PeriodicTable from '$lib/components/PeriodicTable.svelte';
   import DetailPanel from '$lib/components/DetailPanel.svelte';
+  import { onMount } from 'svelte';
+  import {getData} from '$lib/data.js'; // Assuming you have a data fetching function
+
+  let rawData = [];
+
+  onMount(async () => {
+    rawData = await getData();
+    console.log("Fetched data in Main component:", rawData); // <--- should be full array
+  });
+
+  $: data = rawData
 </script>
 
 <div class="main-layout">
@@ -12,7 +23,7 @@
   </div>
 
   <div class="content-row">
-    <PeriodicTable />
+    <PeriodicTable {data} />
     <DetailPanel />
   </div>
 </div>
