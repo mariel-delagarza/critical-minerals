@@ -8,10 +8,6 @@
   console.log("Page data:", data); // <--- should be full array
 </script>
 
-<div id="periodic-table">
-	<strong>Periodic Table</strong>
-</div>
-
 <div class="periodic-grid">
   {#each data as element}
     <div
