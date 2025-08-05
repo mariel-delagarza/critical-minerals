@@ -50,4 +50,5 @@ export async function getData() {
 	});
 
 	console.log(structured);
+  return structured;
 }
