@@ -1,19 +1,11 @@
 <script>
-	import Filters from '$lib/components/Filters.svelte';
+  import Filters from '$lib/components/Filters.svelte';
 	import Legend from '$lib/components/Legend.svelte';
 	import PeriodicTable from '$lib/components/PeriodicTable.svelte';
 	import DetailPanel from '$lib/components/DetailPanel.svelte';
-	import { onMount } from 'svelte';
-	import { getData } from '$lib/data.js'; // Assuming you have a data fetching function
 
-	let rawData = [];
-
-	onMount(async () => {
-		rawData = await getData();
-		console.log('Fetched data in Main component:', rawData); // <--- should be full array
-	});
-
-	$: data = rawData;
+	export let data;
+  const dataArray = data.data; // original data comes as object from +page.js
 </script>
 
 <div class="main-layout">
@@ -22,7 +14,7 @@
 		<Legend />
 	</div>
 	<div class="content-row">
-		<PeriodicTable {data} />
+		<PeriodicTable {dataArray} />
 		<DetailPanel />
 	</div>
 </div>

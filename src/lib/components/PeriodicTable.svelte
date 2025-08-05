@@ -1,15 +1,11 @@
-<!-- This is the periodic table itself -->
 <script>
-  // This component will render the periodic table
   import Element from '$lib/components/Element.svelte';
-  export let data;
+  export let dataArray;
   let elements = [];
-
-  console.log("Page data:", data); // <--- should be full array
 </script>
 
 <div class="periodic-grid">
-  {#each data as element}
+  {#each dataArray as element}
     <div
       class="cell"
       style="grid-column: {element.xpos}; grid-row: {element.ypos};"
