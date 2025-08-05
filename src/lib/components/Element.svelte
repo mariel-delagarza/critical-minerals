@@ -10,6 +10,7 @@
 
 <style>
 	.element {
+    font-family: 'Roboto', sans-serif;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
@@ -18,7 +19,6 @@
 		width: 3rem;
 		height: 3rem;
 		border: 1px solid #ccc;
-		border-radius: 4px;
 		text-align: center;
 		background-color: white;
 		box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
