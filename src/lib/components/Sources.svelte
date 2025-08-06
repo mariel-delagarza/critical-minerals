@@ -3,17 +3,22 @@
 		<h2>Footnotes</h2>
 		<ol>
 			<li id="footnote1">
+				<a href="https://pubs.usgs.gov/periodicals/mcs2025/mcs2025.pdf"
+					>Mineral Commodity Summaries 2025 (USGS)</a
+				>
+			</li>
+			<li id="footnote2">
 				<a
 					href="https://uscode.house.gov/view.xhtml?req=critical+minerals&f=treesort&fq=true&num=37&hl=true&edition=prelim&granuleId=USC-prelim-title30-section1606"
 					>30 U.S.C. § 1606(c)(4)(A)</a
 				>
 			</li>
-			<li>
-				<a href="#">A link to additional reading about cats</a><span
-					>Wikipedia | August 1, 2025</span
+			<li id="footnote3">
+				<a
+					href="https://uscode.house.gov/view.xhtml?req=critical+minerals&f=treesort&fq=true&num=37&hl=true&edition=prelim&granuleId=USC-prelim-title30-section1606"
+					>30 U.S.C. § 1606(a)(2)</a
 				>
 			</li>
-			<!-- add the rest here -->
 		</ol>
 	</div>
 </section>
