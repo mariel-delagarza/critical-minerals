@@ -33,7 +33,7 @@
 		font-family: 'Roboto', sans-serif;
 		margin: 0;
 		/* overflow: hidden; */
-		background: #d2d0d0;
+		background: #eee6d8;
 	}
 
 	.main-layout {

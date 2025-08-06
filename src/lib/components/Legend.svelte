@@ -8,6 +8,7 @@
     outline: 1px solid red;
     max-width: 50%;
     width: 100%;
+    color: #333;
   }
 
   @media (max-width: 1250px) {

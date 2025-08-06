@@ -8,7 +8,7 @@
 <style>
 	.header {
 		padding: 2rem 1rem;
-		background-color: #f8f8f8;
+		background-color: #6e1e43;
 		border-bottom: 1px solid #ddd;
 		width: 100%;
 		display: flex;
@@ -26,11 +26,12 @@
 	h1 {
 		font-size: 2.2rem;
 		margin-bottom: 0.5rem;
+    color: white;
 	}
 
 	.subtitle {
 		font-size: 1rem;
-		color: #555;
+		color: white;
 		margin: 0;
 	}
 	@media (max-width: 768px) {
