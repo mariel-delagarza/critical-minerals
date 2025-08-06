@@ -4,18 +4,44 @@
 	export let highlight;
 	export let activeFilter;
 
-	$: classes = `element ${
-		activeFilter === 'doi' && element['2022_doi_list']
-			? 'doi'
-			: activeFilter === 'doe' && element.doe_critical_mineral
-				? 'doe'
-				: activeFilter === 'dla' && element.dla_materials_of_interest
-					? 'dla'
-					: activeFilter === 'all' &&
-						  (element['2022_doi_list'] ||
-								element.doe_critical_mineral ||
-								element.dla_materials_of_interest)
-						? 'all'
+	const isDOI = element['2022_doi_list'];
+	const isDOE = element.doe_critical_mineral;
+	const isDLA = element.dla_materials_of_interest;
+
+	$: listCount = [isDOI, isDOE, isDLA].filter(Boolean).length;
+
+	$: multiClass =
+		listCount === 3
+			? 'three-lists'
+			: listCount === 2
+				? 'two-lists'
+				: isDOI
+					? 'doi'
+					: isDOE
+						? 'doe'
+						: isDLA
+							? 'dla'
+							: '';
+
+	$: classes = `element ${activeFilter === 'all' ? 'all-mode' : ''} ${
+		activeFilter === 'all'
+			? listCount === 3
+				? 'three-lists'
+				: listCount === 2
+					? 'two-lists'
+					: isDOI
+						? 'doi'
+						: isDOE
+							? 'doe'
+							: isDLA
+								? 'dla'
+								: ''
+			: activeFilter === 'doi' && isDOI
+				? 'doi'
+				: activeFilter === 'doe' && isDOE
+					? 'doe'
+					: activeFilter === 'dla' && isDLA
+						? 'dla'
 						: ''
 	}`;
 
@@ -41,10 +67,11 @@
 		text-align: center;
 		background-color: white;
 		transition: background-color 0.3s;
+		box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
 	}
 	.number {
 		font-size: 1rem;
-		color: #666;
+		color: #000;
 	}
 
 	.symbol {
@@ -52,14 +79,31 @@
 		font-size: 1.5rem;
 	}
 
-  .doi .number {
-    color: black;
-  }
+	.doi .number {
+		color: black;
+	}
 	.doe .number,
 	.dla .number,
 	.all .number {
 		color: white;
 	}
+	.all-mode {
+		box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+	}
+
+	/* In ALL mode, apply semi-transparent colors to allow overlaps */
+	.all-mode.doi {
+		background-color: #edab12;
+	}
+
+	.all-mode.doe {
+		background-color: #0b1d51;
+	}
+
+	.all-mode.dla {
+		background-color: #5a175d;
+	}
+
 	.doi {
 		background-color: #edab12;
 		color: #000;
@@ -73,6 +117,25 @@
 	.dla {
 		background-color: #5a175d;
 		color: #fff;
+	}
+
+	.two-lists {
+		background: linear-gradient(to bottom right, #edab12 50%, /* DOI */ #0b1d51 50% /* DOE */);
+		color: #fff;
+	}
+
+	.three-lists {
+		background: linear-gradient(
+			to bottom right,
+			#edab12 33%,
+			/* DOI */ #0b1d51 33% 66%,
+			/* DOE */ #5a175d 66% /* DLA */
+		);
+		color: #fff;
+	}
+
+	.three-lists .number {
+		color: white;
 	}
 
 	.all {
