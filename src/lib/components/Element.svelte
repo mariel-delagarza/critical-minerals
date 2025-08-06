@@ -51,13 +51,22 @@
 		font-weight: bold;
 		font-size: 1.5rem;
 	}
+
+  .doi .number {
+    color: black;
+  }
+	.doe .number,
+	.dla .number,
+	.all .number {
+		color: white;
+	}
 	.doi {
 		background-color: #edab12;
 		color: #000;
 	}
 
 	.doe {
-		background-color: #1e88e5;
+		background-color: #0b1d51;
 		color: #fff;
 	}
 
