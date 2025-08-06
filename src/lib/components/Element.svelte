@@ -20,7 +20,6 @@
 		border: 1px solid #ccc;
 		text-align: center;
 		background-color: white;
-		box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
 	}
 
 	.number {
