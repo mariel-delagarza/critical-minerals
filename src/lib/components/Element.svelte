@@ -101,7 +101,7 @@
 	}
 
 	.all-mode.dla {
-		background-color: #5a175d;
+		background-color: #6e1e43;
 	}
 
 	.doi {
@@ -115,7 +115,7 @@
 	}
 
 	.dla {
-		background-color: #5a175d;
+		background-color: #6e1e43;
 		color: #fff;
 	}
 
@@ -129,7 +129,7 @@
 			to bottom right,
 			#edab12 33%,
 			/* DOI */ #0b1d51 33% 66%,
-			/* DOE */ #5a175d 66% /* DLA */
+			/* DOE */ #6e1e43 66% /* DLA */
 		);
 		color: #fff;
 	}
