@@ -85,10 +85,8 @@
  /* ------------------------------------------------------ */
  @media (min-width: 1300px) {
 		:global(.detail-panel) {
-			/* new */
-			max-height: 60vh; /* or whatever makes sense visually */
+			max-height: 60vh;
 			overflow-y: auto;
-			position: sticky; /* if you want it to stick while scrolling */
 			top: 1rem; /* offset from the top */
 		}
 	}
