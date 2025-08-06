@@ -32,8 +32,8 @@
 	:global(body) {
 		font-family: 'Roboto', sans-serif;
 		margin: 0;
-		overflow: hidden;
-    height: 100vh;
+		overflow: auto;
+    /* height: 100vh; */
 		background: #eee6d8;
 	}
 
