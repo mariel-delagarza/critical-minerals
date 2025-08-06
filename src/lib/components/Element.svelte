@@ -1,11 +1,27 @@
 <!-- This component represents a single element in the periodic table -->
 <script>
 	export let element;
+	export let highlight;
+	export let activeFilter;
 
-	let classes = 'element';
-	if (element['2022_doi_list']) classes += ' doi';
+	$: classes = `element ${
+		activeFilter === 'doi' && element['2022_doi_list']
+			? 'doi'
+			: activeFilter === 'doe' && element.doe_critical_mineral
+				? 'doe'
+				: activeFilter === 'dla' && element.dla_materials_of_interest
+					? 'dla'
+					: activeFilter === 'all' &&
+						  (element['2022_doi_list'] ||
+								element.doe_critical_mineral ||
+								element.dla_materials_of_interest)
+						? 'all'
+						: ''
+	}`;
 
-  console.log('Element:', element);
+	$: console.log(
+		`[${element.symbol}] filter: ${activeFilter}, highlight: ${highlight}, classes: ${classes}`
+	);
 </script>
 
 <div class={classes}>
@@ -22,11 +38,10 @@
 		font-size: 0.85rem;
 		width: 5rem;
 		height: 5rem;
-		/* border: 1px solid #ccc; */
 		text-align: center;
 		background-color: white;
+		transition: background-color 0.3s;
 	}
-
 	.number {
 		font-size: 1rem;
 		color: #666;
@@ -36,10 +51,24 @@
 		font-weight: bold;
 		font-size: 1.5rem;
 	}
-
 	.doi {
-		background-color: #EDAB12; /* whatever highlight color you want */
-		color: #000000;
+		background-color: #edab12;
+		color: #000;
+	}
+
+	.doe {
+		background-color: #1e88e5;
+		color: #fff;
+	}
+
+	.dla {
+		background-color: #5a175d;
+		color: #fff;
+	}
+
+	.all {
+		background-color: #888;
+		color: #fff;
 	}
 
 	@media (max-width: 1900px) {
