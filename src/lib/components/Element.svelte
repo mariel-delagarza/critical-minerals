@@ -22,7 +22,7 @@
 		font-size: 0.85rem;
 		width: 5rem;
 		height: 5rem;
-		border: 1px solid #ccc;
+		/* border: 1px solid #ccc; */
 		text-align: center;
 		background-color: white;
 	}
@@ -38,8 +38,8 @@
 	}
 
 	.doi {
-		background-color: #dd9933; /* whatever highlight color you want */
-		color: white;
+		background-color: #EDAB12; /* whatever highlight color you want */
+		color: #000000;
 	}
 
 	@media (max-width: 1900px) {
