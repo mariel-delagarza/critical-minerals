@@ -17,9 +17,10 @@ export async function getData() {
 			important_element:
 				row.usgs_critical_mineral === '1' ||
 				row.doe_critical_mineral === '1' ||
+        row.dla_materials_of_interest === '1' ||
 				row.elements_associated_with_critical_minerals === '1',
 			rare_earth: row.rare_earth === '1' ? true : null,
-			usgs_critical_mineral: row.usgs_critical_mineral === '1',
+		  dla_materials_of_interest: row.dla_materials_of_interest === '1',
 			doe_critical_mineral: row.doe_critical_mineral === '1',
 			'2022_doi_list': row['2022_doi_list'] === '1',
 			elements_associated_with_critical_minerals:
