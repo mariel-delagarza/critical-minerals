@@ -51,9 +51,4 @@
 		color: #eac86f;
 		text-decoration: underline;
 	}
-
-	.additional-reading span {
-		display: block;
-		margin-top: 0.25rem;
-	}
 </style>
