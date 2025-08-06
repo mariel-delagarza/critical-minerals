@@ -49,34 +49,34 @@
 		color: #000;
 	}
 
-  .doi:hover {
-    background-color: #9D6D07;
-    transition: background-color 0.3s ease;
-    color: #fff;
-  }
+	.doi:hover {
+		background-color: #9d6d07;
+		transition: background-color 0.3s ease;
+		color: #fff;
+	}
 
 	.doe {
 		background-color: #0b1d51;
 		color: #fff;
 	}
 
-  .doe:hover {
-    background-color: #91a0ba;
-    transition: background-color 0.3s ease;
-    color: #000;
-  }
+	.doe:hover {
+		background-color: #91a0ba;
+		transition: background-color 0.3s ease;
+		color: #000;
+	}
 
 	.dla {
 		background-color: #6e1e43;
 		color: #fff;
 	}
 
-  .dla:hover {
-    background-color: #bc8fa1;
-    transition: background-color 0.3s ease;
-    color: #000;
-  }
-	.all {
+	.dla:hover {
+		background-color: #bc8fa1;
+		transition: background-color 0.3s ease;
+		color: #000;
+	}
+	.all{
 		/* background-color: #444; */
 		background: linear-gradient(
 			to bottom right,
@@ -85,23 +85,39 @@
 			/* DOE */ #6e1e43 66% /* DLA */
 		);
 		color: #fff;
+    transition: background-color 0.3s ease;
 	}
 
 	.doe.selected {
 		background-color: white;
 		color: black;
+    outline: 3px solid #91a0ba;
 	}
 	.doi.selected {
 		background-color: white;
 		color: black;
+    outline: 3px solid #9d6d07;
 	}
+
+	.doi.selected:hover {
+		background-color: #9d6d07;
+		color: #fff;
+	}
+
 	.dla.selected {
 		background-color: white;
 		color: black;
+    outline: 3px solid #bc8fa1;
 	}
+
+  .dla.selected:hover {
+    background-color: #bc8fa1;
+    color: #000;
+  }
 
 	.all.selected {
 		background: white;
 		color: #000;
+    outline: 3px solid #444;
 	}
 </style>
