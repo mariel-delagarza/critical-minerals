@@ -151,13 +151,28 @@
 		background-color: #edab12;
 	}
 
+  .all-mode.doi:hover {
+    background-color: #9d6d07;
+    color: #fff;
+  }
+
 	.all-mode.doe {
 		background-color: #0b1d51;
 	}
 
+  .all-mode.doe:hover {
+    background-color: #91a0ba;
+    color: #000;
+  }
+
 	.all-mode.dla {
 		background-color: #6e1e43;
 	}
+  
+  .all-mode.dla:hover {
+    background-color: #bc8fa1;
+    color: #000;
+  }
 
 	.two-lists {
 		background: linear-gradient(to bottom right, #edab12 50%, /* DOI */ #0b1d51 50% /* DOE */);

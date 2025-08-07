@@ -47,8 +47,7 @@
 		max-width: 50%;
 		width: 100%;
 		color: #333;
-    margin: auto;
-    margin-bottom: 5rem;
+    margin: 5rem auto;
 	}
 
 	@media (max-width: 1250px) {
