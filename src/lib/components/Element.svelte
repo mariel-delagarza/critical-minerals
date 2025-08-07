@@ -62,7 +62,7 @@
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
-		font-size: 0.85rem;
+		font-size: 1.125em;
 		width: 5rem;
 		height: 5rem;
 		text-align: center;
