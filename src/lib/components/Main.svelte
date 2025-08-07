@@ -41,7 +41,7 @@
 	.main-layout {
 		display: flex;
 		flex-direction: column;
-		padding: 1rem;
+		padding: 5rem;
 		gap: 1rem;
 	}
 
