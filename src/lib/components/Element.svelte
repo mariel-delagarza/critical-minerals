@@ -88,7 +88,7 @@
 		color: white;
 	}
 	.all-mode {
-		box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+		box-shadow: 0 0 2px rgba(0, 0, 0, 0.6);
 	}
 
 	/* In ALL mode, apply semi-transparent colors to allow overlaps */
