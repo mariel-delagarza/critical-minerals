@@ -1,11 +1,11 @@
 <script>
-  import Filters from '$lib/components/Filters.svelte';
+	import Filters from '$lib/components/Filters.svelte';
 	import Legend from '$lib/components/Legend.svelte';
 	import PeriodicTable from '$lib/components/PeriodicTable.svelte';
 	import DetailPanel from '$lib/components/DetailPanel.svelte';
 
 	export let data;
-  const dataArray = data.data; // original data comes as object from +page.js
+	const dataArray = data.data; // original data comes as object from +page.js
 </script>
 
 <div class="main-layout">
@@ -32,14 +32,14 @@
 	:global(body) {
 		font-family: 'Roboto', sans-serif;
 		margin: 0;
-		/* overflow: hidden; */
-		background: #d2d0d0;
+		overflow: auto;
+		background: #eee6d8;
 	}
 
 	.main-layout {
 		display: flex;
 		flex-direction: column;
-		padding: 1rem;
+		padding: 5rem;
 		gap: 1rem;
 	}
 
@@ -79,7 +79,23 @@
 		outline: 2px dashed red;
 	}
 
-	/* Mobile styles */
+ /* ------------------------------------------------------ */
+ /*                         Mobile                         */
+ /* ------------------------------------------------------ */
+ @media (min-width: 1300px) {
+		:global(.detail-panel) {
+			max-height: 60vh;
+			overflow-y: auto;
+			top: 1rem; /* offset from the top */
+		}
+	}
+
+	@media (max-width: 1300px) {
+		:global(body) {
+			overflow: auto;
+		}
+	}
+
 	@media (max-width: 768px) {
 		.content-row {
 			flex-direction: column;
