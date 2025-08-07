@@ -33,9 +33,7 @@
 		font-family: 'Roboto', sans-serif;
 		margin: 0;
 		overflow: auto;
-    /* height: 100vh; */
 		background: #eee6d8;
-    /* background: #f7f4ed; */
 	}
 
 	.main-layout {
