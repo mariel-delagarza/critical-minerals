@@ -40,11 +40,15 @@
 
 <style>
 	#legend {
-		font-size: 1.2rem;
+    font-family: 'Source Serif 4', serif;
+		font-size: 1.25rem;
+    font-weight: 450;
 		outline: 1px solid red;
 		max-width: 50%;
 		width: 100%;
 		color: #333;
+    margin: auto;
+    margin-bottom: 5rem;
 	}
 
 	@media (max-width: 1250px) {
