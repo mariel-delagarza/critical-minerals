@@ -42,41 +42,70 @@
 		background: white;
 		cursor: pointer;
 		border: none;
+		position: relative; /* Needed for ::before positioning */
+		z-index: 0; /* Ensure pseudo-elements go behind content */
+		overflow: hidden; /* Prevents gradient from spilling */
 	}
 
+	/* --------------------- DOI button --------------------- */
 	.doi {
 		background-color: #edab12;
 		color: #000;
 	}
 
-	.doi:hover {
+	.doi:hover,
+	.doi.selected:hover {
 		background-color: #9d6d07;
 		transition: background-color 0.3s ease;
 		color: #fff;
 	}
 
+	.doi.selected {
+		background-color: white;
+		color: black;
+		outline: 3px solid #9d6d07;
+	}
+
+	/* --------------------- DOE button --------------------- */
 	.doe {
 		background-color: #0b1d51;
 		color: #fff;
 	}
 
-	.doe:hover {
+	.doe:hover,
+  .doe.selected:hover {
 		background-color: #91a0ba;
 		transition: background-color 0.3s ease;
 		color: #000;
 	}
 
+	.doe.selected {
+		background-color: white;
+		color: black;
+		outline: 3px solid #91a0ba;
+	}
+
+	/* --------------------- DLA button --------------------- */
 	.dla {
 		background-color: #6e1e43;
 		color: #fff;
 	}
 
-	.dla:hover {
+	.dla:hover,
+	.dla.selected:hover {
 		background-color: #bc8fa1;
 		transition: background-color 0.3s ease;
 		color: #000;
 	}
-	.all{
+
+	.dla.selected {
+		background-color: white;
+		color: black;
+		outline: 3px solid #bc8fa1;
+	}
+
+	/* -------------------- "All" button -------------------- */
+	.all {
 		/* background-color: #444; */
 		background: linear-gradient(
 			to bottom right,
@@ -85,39 +114,34 @@
 			/* DOE */ #6e1e43 66% /* DLA */
 		);
 		color: #fff;
-    transition: background-color 0.3s ease;
+		transition: background-color 0.3s ease;
 	}
-
-	.doe.selected {
-		background-color: white;
-		color: black;
-    outline: 3px solid #91a0ba;
-	}
-	.doi.selected {
-		background-color: white;
-		color: black;
-    outline: 3px solid #9d6d07;
-	}
-
-	.doi.selected:hover {
-		background-color: #9d6d07;
-		color: #fff;
-	}
-
-	.dla.selected {
-		background-color: white;
-		color: black;
-    outline: 3px solid #bc8fa1;
-	}
-
-  .dla.selected:hover {
-    background-color: #bc8fa1;
-    color: #000;
-  }
 
 	.all.selected {
 		background: white;
 		color: #000;
-    outline: 3px solid #444;
+		outline: 3px solid #444;
+		position: relative; /* You missed this */
+		z-index: 0;
+	}
+
+	.all.selected:hover {
+		color: #000;
+	}
+
+	.all.selected::before {
+		content: '';
+		color: #fff;
+		position: absolute;
+		inset: 0;
+		background: linear-gradient(to bottom right, #edab12 33%, #91a0ba 33% 66%, #bc8fa1 66%);
+		opacity: 0;
+		transition: opacity 0.3s ease;
+		z-index: -1; /* Ensures it's behind button content */
+	}
+
+	.all.selected:hover::before {
+		opacity: 1;
+		color: #fff;
 	}
 </style>
