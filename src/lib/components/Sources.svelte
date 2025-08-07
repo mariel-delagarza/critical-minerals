@@ -25,11 +25,11 @@
 
 <style>
 	.additional-reading {
-		background: #261f11;
+		background: #074e67;
 		color: #fff7e6;
 		padding: 3rem 2rem;
-		font-size: 0.95rem;
-		font-family: 'IBM Plex Sans', serif;
+		font-size: 1rem;
+		font-family: 'Roboto', serif;
 		margin-top: 5rem;
 	}
 
@@ -48,7 +48,16 @@
 	}
 
 	.additional-reading a {
-		color: #eac86f;
-		text-decoration: underline;
+		/* color: #F8DFA5; */
+    color: #fff;
+		text-decoration: none;
+    border-bottom: 1px solid #fff;
 	}
+
+  .additional-reading a:hover {
+    color: #FFDF9E;
+    text-decoration: none;
+    border-bottom: 1px solid #FFDF9E;
+    transition: border-bottom 0.3s ease;
+  }
 </style>
