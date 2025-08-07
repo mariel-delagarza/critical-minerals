@@ -30,7 +30,7 @@
 		display: flex;
 		justify-content: center;
 		flex-wrap: wrap;
-		gap: 0.5rem;
+		gap: 1rem;
 		margin-bottom: 1rem;
 		margin-top: 1rem;
 	}
