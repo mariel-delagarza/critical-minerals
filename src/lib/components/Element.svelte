@@ -48,6 +48,43 @@
 
 <style>
 	/* --------------- Element, Number, Symbol -------------- */
+
+	@property --doi {
+		syntax: '<color>';
+		initial-value: #edab12;
+		inherits: false;
+	}
+
+	@property --doe {
+		syntax: '<color>';
+		initial-value: #0b1d51;
+		inherits: false;
+	}
+
+	@property --dla {
+		syntax: '<color>';
+		initial-value: #6e1e43;
+		inherits: false;
+	}
+
+	@property --doi_hover {
+		syntax: '<color>';
+		initial-value: #9d6d07;
+		inherits: false;
+	}
+
+	@property --doe_hover {
+		syntax: '<color>';
+		initial-value: #91a0ba;
+		inherits: false;
+	}
+
+	@property --dla_hover {
+		syntax: '<color>';
+		initial-value: #bc8fa1;
+		inherits: false;
+	}
+
 	.element {
 		display: flex;
 		flex-direction: column;
@@ -67,11 +104,12 @@
 	}
 
 	.doi .number {
-		color: black;
+		color: #000;
 	}
 
 	.doi:hover .number {
-		color: white;
+		color: #fff;
+		transition: color 0.3s ease;
 	}
 
 	.doe .number,
@@ -86,7 +124,7 @@
 	}
 
 	.three-lists .number {
-		color: white;
+		color: #fff;
 	}
 
 	.symbol {
@@ -97,35 +135,33 @@
 	/* -------------------- DOI, DOE, DLA ------------------- */
 
 	.doi {
-		background-color: #edab12;
+		background-color: var(--doi);
 		color: #000;
 	}
 
 	.doi:hover {
-		background-color: #9d6d07;
+		background-color: var(--doi_hover);
 		color: #fff;
 	}
 
 	.doe {
-		background-color: #0b1d51;
+		background-color: var(--doe);
 		color: #fff;
 	}
 
 	.doe:hover {
-		background-color: #91a0ba;
+		background-color: var(--doe_hover);
 		color: #000;
-		transition: background-color 0.3s ease;
 	}
 
 	.dla {
-		background-color: #6e1e43;
+		background-color: var(--dla);
 		color: #fff;
 	}
 
 	.dla:hover {
-		background-color: #bc8fa1;
+		background-color: var(--dla_hover);
 		color: #000;
-		transition: background-color 0.3s ease;
 	}
 
 	/* ------------------------- All ------------------------ */
@@ -138,57 +174,65 @@
 		box-shadow: 0 0 2px rgba(0, 0, 0, 0.6);
 	}
 
-	.all-mode.doi {
-		background-color: #edab12;
-	}
-
-	.all-mode.doi:hover {
-		background-color: #9d6d07;
-		color: #fff;
-	}
-
-	.all-mode.doe {
-		background-color: #0b1d51;
-	}
-
-	.all-mode.doe:hover {
-		background-color: #91a0ba;
-		color: #000;
-	}
-
-	.all-mode.dla {
-		background-color: #6e1e43;
-	}
-
-	.all-mode.dla:hover {
-		background-color: #bc8fa1;
-		color: #000;
-	}
-
 	.doi-doe {
-		background: linear-gradient(to bottom right, #edab12 50%, /* DOI */ #0b1d51 50% /* DOE */);
+		background: linear-gradient(to bottom right, var(--doi) 50%, var(--doe) 50%);
 		color: #fff;
+		transition:
+			--doi 0.3s,
+			--doe 0.3s;
+	}
+
+	.doi-doe:hover {
+		--doi: var(--doi_hover);
+		--doe: var(--doe_hover);
 	}
 
 	.doi-dla {
-		background: linear-gradient(to bottom right, #edab12 50%, /* DOI */ #6e1e43 50% /* DLA */);
+		background: linear-gradient(to bottom right, var(--doi) 50%, var(--dla) 50%);
 		color: #fff;
+		transition:
+			--doi 0.3s,
+			--dla 0.3s;
+	}
+
+	.doi-dla:hover {
+		--doi: var(--doi_hover);
+		--dla: var(--dla_hover);
 	}
 
 	.doe-dla {
-		background: linear-gradient(to bottom right, #0b1d51 50%, /* DOE */ #6e1e43 50% /* DLA */);
+		background: linear-gradient(to bottom right, var(--doe) 50%, var(--dla) 50%);
 		color: #fff;
+		transition:
+			--doe 0.3s,
+			--dla 0.3s;
+	}
+
+	.doe-dla:hover {
+		--doe: var(--doe_hover);
+		--dla: var(--dla_hover);
 	}
 
 	.three-lists {
 		background: linear-gradient(
 			to bottom right,
-			#edab12 33%,
-			/* DOI */ #0b1d51 33% 66%,
-			/* DOE */ #6e1e43 66% /* DLA */
+			var(--doi) 33%,
+			var(--doe) 33% 66%,
+			var(--dla) 66%
 		);
 		color: #fff;
+		transition:
+			--doi 0.3s,
+			--doe 0.3s,
+			--dla 0.3s;
 	}
+
+	.three-lists:hover {
+		--doi: var(--doi_hover);
+		--doe: var(--doe_hover);
+		--dla: var(--dla_hover);
+	}
+
 	@media (max-width: 1900px) {
 		.element {
 			width: 3rem;
