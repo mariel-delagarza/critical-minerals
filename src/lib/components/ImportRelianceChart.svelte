@@ -6,7 +6,7 @@
 	onMount(() => {
 		Highcharts.chart('reliance-container', {
 			chart: {
-				type: 'column'
+				type: 'bar'
 			},
 			title: {
 				text: 'Corn vs wheat estimated production for 2023'
