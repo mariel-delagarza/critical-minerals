@@ -7,8 +7,8 @@
 
 <style>
 	.header {
-		padding: 2rem 1rem;
-		background-color: #6e1e43;
+		padding: 7rem 1rem;
+		background-color: #500000;
 		border-bottom: 1px solid #ddd;
 		width: 100%;
 		display: flex;
@@ -24,7 +24,7 @@
 	}
 
 	h1 {
-		font-size: 2.2rem;
+		font-size: 4rem;
 		margin-bottom: 0.5rem;
     color: white;
 	}
