@@ -10,32 +10,23 @@
 
 	$: listCount = [isDOI, isDOE, isDLA].filter(Boolean).length;
 
-	$: multiClass =
-		listCount === 3
-			? 'three-lists'
-			: listCount === 2
-				? 'two-lists'
-				: isDOI
-					? 'doi'
-					: isDOE
-						? 'doe'
-						: isDLA
-							? 'dla'
-							: '';
-
 	$: classes = `element ${activeFilter === 'all' ? 'all-mode' : ''} ${
 		activeFilter === 'all'
 			? listCount === 3
 				? 'three-lists'
-				: listCount === 2
-					? 'two-lists'
-					: isDOI
-						? 'doi'
-						: isDOE
-							? 'doe'
-							: isDLA
-								? 'dla'
-								: ''
+				: isDOI && isDOE
+					? 'doi-doe'
+					: isDOI && isDLA
+						? 'doi-dla'
+						: isDOE && isDLA
+							? 'doe-dla'
+							: isDOI
+								? 'doi'
+								: isDOE
+									? 'doe'
+									: isDLA
+										? 'dla'
+										: ''
 			: activeFilter === 'doi' && isDOI
 				? 'doi'
 				: activeFilter === 'doe' && isDOE
@@ -87,12 +78,12 @@
 	.dla .number {
 		color: #fff;
 	}
-  
-  .doe:hover .number,
-  .dla:hover .number {
-    color: #000;
-    transition: color 0.3s ease;
-  }
+
+	.doe:hover .number,
+	.dla:hover .number {
+		color: #000;
+		transition: color 0.3s ease;
+	}
 
 	.three-lists .number {
 		color: white;
@@ -120,22 +111,22 @@
 		color: #fff;
 	}
 
-  .doe:hover {
-    background-color: #91a0ba;
-    color: #000;
-    transition: background-color 0.3s ease;
-  }
+	.doe:hover {
+		background-color: #91a0ba;
+		color: #000;
+		transition: background-color 0.3s ease;
+	}
 
 	.dla {
 		background-color: #6e1e43;
 		color: #fff;
 	}
 
-  .dla:hover {
-    background-color: #bc8fa1;
-    color: #000;
-    transition: background-color 0.3s ease;
-  }
+	.dla:hover {
+		background-color: #bc8fa1;
+		color: #000;
+		transition: background-color 0.3s ease;
+	}
 
 	/* ------------------------- All ------------------------ */
 	.all {
@@ -151,31 +142,41 @@
 		background-color: #edab12;
 	}
 
-  .all-mode.doi:hover {
-    background-color: #9d6d07;
-    color: #fff;
-  }
+	.all-mode.doi:hover {
+		background-color: #9d6d07;
+		color: #fff;
+	}
 
 	.all-mode.doe {
 		background-color: #0b1d51;
 	}
 
-  .all-mode.doe:hover {
-    background-color: #91a0ba;
-    color: #000;
-  }
+	.all-mode.doe:hover {
+		background-color: #91a0ba;
+		color: #000;
+	}
 
 	.all-mode.dla {
 		background-color: #6e1e43;
 	}
-  
-  .all-mode.dla:hover {
-    background-color: #bc8fa1;
-    color: #000;
-  }
 
-	.two-lists {
+	.all-mode.dla:hover {
+		background-color: #bc8fa1;
+		color: #000;
+	}
+
+	.doi-doe {
 		background: linear-gradient(to bottom right, #edab12 50%, /* DOI */ #0b1d51 50% /* DOE */);
+		color: #fff;
+	}
+
+	.doi-dla {
+		background: linear-gradient(to bottom right, #edab12 50%, /* DOI */ #6e1e43 50% /* DLA */);
+		color: #fff;
+	}
+
+	.doe-dla {
+		background: linear-gradient(to bottom right, #0b1d51 50%, /* DOE */ #6e1e43 50% /* DLA */);
 		color: #fff;
 	}
 
