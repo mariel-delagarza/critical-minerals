@@ -10,7 +10,7 @@
 
 	$: listCount = [isDOI, isDOE, isDLA].filter(Boolean).length;
 
-	$: classes = `element ${activeFilter === 'all' ? 'all-mode' : ''} ${
+	$: classes = `element ${
 		activeFilter === 'all'
 			? listCount === 3
 				? 'three-lists'
@@ -96,7 +96,7 @@
 		text-align: center;
 		background-color: white;
 		transition: background-color 0.3s;
-		box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
+		box-shadow: 0 0 2px rgba(0, 0, 0, 0.6);
 	}
 	.number {
 		font-size: 1rem;
@@ -165,14 +165,6 @@
 	}
 
 	/* ------------------------- All ------------------------ */
-	.all {
-		background-color: #888;
-		color: #fff;
-	}
-
-	.all-mode {
-		box-shadow: 0 0 2px rgba(0, 0, 0, 0.6);
-	}
 
 	.doi-doe {
 		background: linear-gradient(to bottom right, var(--doi) 50%, var(--doe) 50%);
