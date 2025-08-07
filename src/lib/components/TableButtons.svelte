@@ -52,6 +52,10 @@
 		background-color: #edab12;
 		color: #000;
 	}
+	.doi:focus {
+		outline: 3px solid #9d6d07;
+		outline-offset: 3px;
+	}
 
 	.doi:hover,
 	.doi.selected:hover {
@@ -72,8 +76,13 @@
 		color: #fff;
 	}
 
+	.doe:focus {
+		outline: 3px solid #0b1d51;
+		outline-offset: 3px;
+	}
+
 	.doe:hover,
-  .doe.selected:hover {
+	.doe.selected:hover {
 		background-color: #91a0ba;
 		transition: background-color 0.3s ease;
 		color: #000;
@@ -89,6 +98,11 @@
 	.dla {
 		background-color: #6e1e43;
 		color: #fff;
+	}
+
+	.dla:focus {
+		outline: 3px solid #6e1e43;
+		outline-offset: 3px;
 	}
 
 	.dla:hover,
@@ -115,6 +129,11 @@
 		);
 		color: #fff;
 		transition: background-color 0.3s ease;
+	}
+
+	.all:focus {
+		outline: 3px solid #444;
+		outline-offset: 3px;
 	}
 
 	.all.selected {
