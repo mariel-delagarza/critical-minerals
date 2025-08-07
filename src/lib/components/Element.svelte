@@ -56,6 +56,7 @@
 </div>
 
 <style>
+	/* --------------- Element, Number, Symbol -------------- */
 	.element {
 		display: flex;
 		flex-direction: column;
@@ -74,24 +75,78 @@
 		color: #000;
 	}
 
+	.doi .number {
+		color: black;
+	}
+
+	.doi:hover .number {
+		color: white;
+	}
+
+	.doe .number,
+	.dla .number {
+		color: #fff;
+	}
+  
+  .doe:hover .number,
+  .dla:hover .number {
+    color: #000;
+    transition: color 0.3s ease;
+  }
+
+	.three-lists .number {
+		color: white;
+	}
+
 	.symbol {
 		font-weight: bold;
 		font-size: 1.5rem;
 	}
 
-	.doi .number {
-		color: black;
+	/* -------------------- DOI, DOE, DLA ------------------- */
+
+	.doi {
+		background-color: #edab12;
+		color: #000;
 	}
-	.doe .number,
-	.dla .number,
-	.all .number {
-		color: white;
+
+	.doi:hover {
+		background-color: #9d6d07;
+		color: #fff;
 	}
+
+	.doe {
+		background-color: #0b1d51;
+		color: #fff;
+	}
+
+  .doe:hover {
+    background-color: #91a0ba;
+    color: #000;
+    transition: background-color 0.3s ease;
+  }
+
+	.dla {
+		background-color: #6e1e43;
+		color: #fff;
+	}
+
+  .dla:hover {
+    background-color: #bc8fa1;
+    color: #000;
+    transition: background-color 0.3s ease;
+  }
+
+	/* ------------------------- All ------------------------ */
+	.all {
+		background-color: #888;
+		color: #fff;
+	}
+
 	.all-mode {
 		box-shadow: 0 0 2px rgba(0, 0, 0, 0.6);
 	}
 
-	/* In ALL mode, apply semi-transparent colors to allow overlaps */
 	.all-mode.doi {
 		background-color: #edab12;
 	}
@@ -102,21 +157,6 @@
 
 	.all-mode.dla {
 		background-color: #6e1e43;
-	}
-
-	.doi {
-		background-color: #edab12;
-		color: #000;
-	}
-
-	.doe {
-		background-color: #0b1d51;
-		color: #fff;
-	}
-
-	.dla {
-		background-color: #6e1e43;
-		color: #fff;
 	}
 
 	.two-lists {
@@ -133,16 +173,6 @@
 		);
 		color: #fff;
 	}
-
-	.three-lists .number {
-		color: white;
-	}
-
-	.all {
-		background-color: #888;
-		color: #fff;
-	}
-
 	@media (max-width: 1900px) {
 		.element {
 			width: 3rem;
