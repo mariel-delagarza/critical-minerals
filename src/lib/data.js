@@ -90,6 +90,7 @@ export async function getData() {
 			materials[materialName]['applications'] = row[`applications_${i}`];
 			materials[materialName][`importNumbersFor`] = row[`import_numbers_for_${i}`];
 			materials[materialName][`primaryImportSource`] = row[`primary_import_source_${i}`];
+      materials[materialName]['applications'] = row[`applications_${i}`]
 
 			// Build imports object for this material from country columns
 			const imports = {};
