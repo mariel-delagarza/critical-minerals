@@ -38,10 +38,10 @@
 		font-size: 0.95rem;
 	}
 
-	.footer__logo img {
+	/* .footer__logo img {
 		max-width: 180px;
 		margin-bottom: 1.5rem;
-	}
+	} */
 
 	.footer__main {
 		display: flex;
