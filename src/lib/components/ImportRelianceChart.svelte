@@ -30,7 +30,7 @@ function rowsFromElement(el) {
 </script>
 
 <div class="bars">
-  <h3>Countries imported from</h3>
+  <h3 >Countries imported from</h3>
 
   {#each rows as r (r.country)}
     <div
@@ -53,7 +53,12 @@ function rowsFromElement(el) {
     padding: 0 1rem;
     font-size: 1.125rem;
   }
-  
+
+  .bars h3 {
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 1.2rem;
+  }
   .bar-row {
     display: grid;
     grid-template-columns: 140px 56px 1fr;
