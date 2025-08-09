@@ -35,10 +35,6 @@
 						? 'dla'
 						: ''
 	}`;
-
-	$: console.log(
-		`[${element.symbol}] filter: ${activeFilter}, highlight: ${highlight}, classes: ${classes}`
-	);
 </script>
 
 <div class={classes}>
