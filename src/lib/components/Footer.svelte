@@ -1,7 +1,7 @@
 <footer class="footer">
 	<div class="container">
 		<div class="footer__logo">
-			<img src="logo.svg" alt="Logo" />
+			<!-- <img src="logo.svg" alt="Logo" /> -->
 		</div>
 
 		<div class="footer__main">
@@ -24,7 +24,7 @@
 		<div class="footer__copyright">
 			<p>
 				Copyright © 2025 Logoipsum. All rights reserved.
-				<a href="#">Privacy Policy</a>
+				<a href="www.google.com">Privacy Policy</a>
 			</p>
 		</div>
 	</div>
@@ -38,10 +38,10 @@
 		font-size: 0.95rem;
 	}
 
-	.footer__logo img {
+	/* .footer__logo img {
 		max-width: 180px;
 		margin-bottom: 1.5rem;
-	}
+	} */
 
 	.footer__main {
 		display: flex;

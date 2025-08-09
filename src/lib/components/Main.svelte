@@ -6,6 +6,12 @@
 
 	export let data;
 	const dataArray = data.data; // original data comes as object from +page.js
+	let wrapperHeight = 0; // comes from PeriodicTable
+
+	let selected = null;
+	function handleSelect(e) {
+		selected = e.detail; // an element object
+	}
 </script>
 
 <div class="main-layout">
@@ -13,9 +19,9 @@
 		<Filters />
 		<Legend />
 	</div>
-	<div class="content-row">
-		<PeriodicTable {dataArray} />
-		<DetailPanel />
+	<div class="content-row" style={`--row-h: ${wrapperHeight}px`}>
+		<PeriodicTable {dataArray} on:selectElement={handleSelect} bind:wrapperHeight />
+		<DetailPanel {selected} />
 	</div>
 </div>
 
@@ -39,7 +45,9 @@
 	.main-layout {
 		display: flex;
 		flex-direction: column;
-		padding: 5rem;
+		/* max-width: 1900px; */
+		margin-inline: auto;
+		padding: 1rem;
 		gap: 1rem;
 	}
 
@@ -49,25 +57,26 @@
 		flex-wrap: wrap;
 		gap: 1rem;
 	}
-
 	.content-row {
 		display: flex;
 		flex-direction: row;
-		gap: 2rem;
-		align-items: flex-start;
-		flex-wrap: wrap;
+		gap: 1rem;
+		align-items: stretch;
+    width: 100%;
 	}
-
 	:global(.periodic-table) {
-		flex: 1 1 0;
-		min-width: 300px;
+		flex: 3 1 0;
+		min-width: 0;
 		outline: 2px dashed red;
+		min-height: 0;
+		overflow-x: auto;
 	}
-
-	:global(.detail-panel) {
-		flex: 1 1 0;
-		min-width: 250px;
-		outline: 2px dashed red;
+  	:global(.detail-panel) {
+		flex: 2 1 0;
+		min-width: 400px;
+		outline: 2px dashed purple;
+		height: var(--row-h);
+		overflow-y: auto;
 	}
 
 	:global(.filters) {
@@ -79,15 +88,13 @@
 		outline: 2px dashed red;
 	}
 
- /* ------------------------------------------------------ */
- /*                         Mobile                         */
- /* ------------------------------------------------------ */
- @media (min-width: 1300px) {
-		:global(.detail-panel) {
-			max-height: 60vh;
-			overflow-y: auto;
-			top: 1rem; /* offset from the top */
-		}
+	/* ------------------------------------------------------ */
+	/*                         Mobile                         */
+	/* ------------------------------------------------------ */
+	@media (min-width: 1900px) {
+    :global(.detail-panel) {
+      max-width: 38%; 
+    }
 	}
 
 	@media (max-width: 1300px) {
@@ -96,7 +103,7 @@
 		}
 	}
 
-	@media (max-width: 768px) {
+	@media (max-width: 1100px) {
 		.content-row {
 			flex-direction: column;
 		}

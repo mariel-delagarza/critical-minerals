@@ -1,71 +1,66 @@
-<!-- This will be a line chart comparing net import reliance over time -->
 <script>
-	import { onMount } from 'svelte';
-	import Highcharts from 'highcharts';
+  import { fade } from 'svelte/transition';
+  import { flip } from 'svelte/animate';
 
-	onMount(() => {
-		Highcharts.chart('reliance-container', {
-			chart: {
-				type: 'column'
-			},
-			title: {
-				text: 'Corn vs wheat estimated production for 2023'
-			},
-			subtitle: {
-				text:
-					'Source: <a target="_blank" ' +
-					'href="https://www.indexmundi.com/agriculture/?commodity=corn">indexmundi</a>'
-			},
-			xAxis: {
-				categories: ['USA', 'China', 'Brazil', 'EU', 'Argentina', 'India'],
-				crosshair: true,
-				accessibility: {
-					description: 'Countries'
-				}
-			},
-			yAxis: {
-				min: 0,
-				title: {
-					text: '1000 metric tons (MT)'
-				}
-			},
-			tooltip: {
-				valueSuffix: ' (1000 MT)'
-			},
-			plotOptions: {
-				column: {
-					pointPadding: 0.2,
-					borderWidth: 0
-				}
-			},
-			series: [
-				{
-					name: 'Corn',
-					data: [387749, 280000, 129000, 64300, 54000, 34300]
-				},
-				{
-					name: 'Wheat',
-					data: [45321, 140000, 10000, 140500, 19500, 113500]
-				}
-			]
-		});
-	});
+  export let element;
+
+function rowsFromElement(el) {
+  if (!el?.materials) return [];
+  const totals = new Map();
+  for (const m of Object.values(el.materials)) {
+    const imports = m?.imports || {};
+    for (const [country, pct] of Object.entries(imports)) {
+      totals.set(country, (totals.get(country) || 0) + (Number(pct) || 0));
+    }
+  }
+
+  return [...totals.entries()]
+    .map(([country, value]) => ({ country, value }))
+    .sort((a, b) => {
+      const aIsOther = a.country.toLowerCase() === "other";
+      const bIsOther = b.country.toLowerCase() === "other";
+      if (aIsOther && !bIsOther) return 1;   // a is "Other" → goes after b
+      if (bIsOther && !aIsOther) return -1;  // b is "Other" → goes after a
+      return b.value - a.value;              // otherwise sort by % descending
+    });
+}
+
+
+  $: rows = rowsFromElement(element);
 </script>
 
-<div id="import-reliance-chart">
-	<strong>Import Reliance Chart</strong>
+<div class="bars">
+  <h3>Countries imported from</h3>
 
-	<figure class="highcharts-figure">
-		<div id="reliance-container"></div>
-		<p class="highcharts-description">
-			A basic column chart comparing estimated corn and wheat production in some countries. The
-			chart is making use of the axis crosshair feature, to highlight the hovered country.
-		</p>
-	</figure>
+  {#each rows as r (r.country)}
+    <div
+      class="bar-row"
+      transition:fade={{ duration: 180 }}   
+      animate:flip                        
+    >
+      <span class="label">{r.country}</span>
+      <span class="value">{Math.round(r.value)}%</span>
+      <div class="bar-track" aria-hidden="true">
+        <div class="bar" style="width: {Math.min(r.value, 100)}%"></div>
+      </div>
+    </div>
+  {/each}
 </div>
 
 <style>
-	#import-reliance-chart {
-		outline: 1px solid red;
-	}
+  .bars {
+    min-height: 700px;
+    padding: 0 1rem;
+    font-size: 1.125rem;
+  }
+  
+  .bar-row {
+    display: grid;
+    grid-template-columns: 140px 56px 1fr;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  .bar-track { height: 20px; background: #EEE6D8; overflow: hidden; }
+  .bar { height: 100%; background: #5a175d; transition: width 500ms ease; }
 </style>
