@@ -24,7 +24,7 @@
 		<div class="footer__copyright">
 			<p>
 				Copyright © 2025 Logoipsum. All rights reserved.
-				<a href="#">Privacy Policy</a>
+				<a href="www.google.com">Privacy Policy</a>
 			</p>
 		</div>
 	</div>
