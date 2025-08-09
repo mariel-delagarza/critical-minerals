@@ -86,8 +86,12 @@
 		align-items: center;
 		justify-content: center;
 		font-size: 1.125em;
-		width: 5rem;
-		height: 5rem;
+		/* width: 4.5rem;
+		height: 4.5rem; */
+    /* width: 100%;
+    height: 100%; */
+    width: 100%; 
+    aspect-ratio: 1/1;
 		text-align: center;
 		background-color: white;
 		transition: background-color 0.3s;
@@ -221,10 +225,10 @@
 	}
 
 	@media (max-width: 1900px) {
-		.element {
+		/* .element {
 			width: 3rem;
 			height: 3rem;
-		}
+		} */
 
 		.number {
 			font-size: 0.8rem;
@@ -235,10 +239,10 @@
 		}
 	}
 	@media (max-width: 1500px) {
-		.element {
+		/* .element {
 			width: 3rem;
 			height: 3rem;
-		}
+		} */
 
 		.number {
 			font-size: 0.7rem;
