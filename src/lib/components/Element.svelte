@@ -1,7 +1,6 @@
 <!-- This component represents a single element in the periodic table -->
 <script>
 	export let element;
-	export let highlight;
 	export let activeFilter;
 
 	const isDOI = element['2022_doi_list'];
