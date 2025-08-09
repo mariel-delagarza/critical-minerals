@@ -9,9 +9,9 @@
 <div class="detail-panel">
 	<h2>Detail Panel</h2>
 	{#if $selectedElement}
-		<Map element={$selectedElement} />
+		<Map element={$selectedElement} />		
+    <ImportValuesChart element={$selectedElement} />
 		<ImportRelianceChart element={$selectedElement} />
-		<ImportValuesChart element={$selectedElement} />
 	{/if}
 </div>
 

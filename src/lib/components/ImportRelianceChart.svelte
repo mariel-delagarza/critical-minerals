@@ -17,14 +17,14 @@ function rowsFromElement(el) {
   return [...totals.entries()]
     .map(([country, value]) => ({ country, value }))
     .sort((a, b) => {
-      // put "Other" last
-      if (a.country.toLowerCase() === "other") return 1;
-      if (b.country.toLowerCase() === "other") return -1;
-      // otherwise sort alphabetically
-      return a.country.localeCompare(b.country, undefined, { sensitivity: "base" });
-    })
-    .slice(0, 8); // optional: limit to top N
+      const aIsOther = a.country.toLowerCase() === "other";
+      const bIsOther = b.country.toLowerCase() === "other";
+      if (aIsOther && !bIsOther) return 1;   // a is "Other" → goes after b
+      if (bIsOther && !aIsOther) return -1;  // b is "Other" → goes after a
+      return b.value - a.value;              // otherwise sort by % descending
+    });
 }
+
 
   $: rows = rowsFromElement(element);
 </script>
@@ -48,13 +48,19 @@ function rowsFromElement(el) {
 </div>
 
 <style>
+  .bars {
+    min-height: 700px;
+    padding: 0 1rem;
+    font-size: 1.125rem;
+  }
+  
   .bar-row {
     display: grid;
     grid-template-columns: 140px 56px 1fr;
     align-items: center;
     gap: 8px;
-    margin-bottom: 6px;
+    margin-bottom: 12px;
   }
-  .bar-track { height: 10px; background: #e5e7eb; overflow: hidden; }
-  .bar { height: 100%; background: #60a5fa; transition: width 500ms ease; }
+  .bar-track { height: 20px; background: #EEE6D8; overflow: hidden; }
+  .bar { height: 100%; background: #5a175d; transition: width 500ms ease; }
 </style>
