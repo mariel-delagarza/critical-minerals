@@ -14,7 +14,7 @@
 			},
 			title: {
 				text: 'Corn vs wheat estimated production for 2023'
-			},
+			}, 
 			subtitle: {
 				text:
 					'Source: <a target="_blank" ' +

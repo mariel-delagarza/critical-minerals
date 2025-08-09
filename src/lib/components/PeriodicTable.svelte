@@ -1,7 +1,8 @@
 <script>
 	import Element from '$lib/components/Element.svelte';
 	import TableButtons from './TableButtons.svelte';
-	import { selectedElement } from '$lib/stores/selectedElement';
+  	import { selectedElement } from '$lib/stores/selectedElement';
+
 
 	export let dataArray;
 	let activeFilter = 'all';

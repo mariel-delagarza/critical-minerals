@@ -6,6 +6,11 @@
 
 	export let data;
 	const dataArray = data.data; // original data comes as object from +page.js
+
+  let selected = null;
+  function handleSelect(e) {
+    selected = e.detail; // an element object
+  }
 </script>
 
 <div class="main-layout">
@@ -14,8 +19,8 @@
 		<Legend />
 	</div>
 	<div class="content-row">
-		<PeriodicTable {dataArray} />
-		<DetailPanel />
+		<PeriodicTable {dataArray} on:selectElement={handleSelect} />
+		<DetailPanel {selected} />
 	</div>
 </div>
 
@@ -79,10 +84,10 @@
 		outline: 2px dashed red;
 	}
 
- /* ------------------------------------------------------ */
- /*                         Mobile                         */
- /* ------------------------------------------------------ */
- @media (min-width: 1300px) {
+	/* ------------------------------------------------------ */
+	/*                         Mobile                         */
+	/* ------------------------------------------------------ */
+	@media (min-width: 1300px) {
 		:global(.detail-panel) {
 			max-height: 60vh;
 			overflow-y: auto;
