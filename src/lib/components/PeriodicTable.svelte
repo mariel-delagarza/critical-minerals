@@ -55,30 +55,65 @@
 		border: 0;
 		background: transparent;
 		cursor: pointer;
-    width: 100%;
-    height: 100%;
-    display: block;
+		width: 100%;
+		height: 100%;
+		display: block;
 	}
 	.cell:focus-visible {
 		outline: 2px solid #333;
 	}
 	.table-wrapper {
 		outline: 1px solid green;
+		container-type: inline-size;
+		container-name: table;
 	}
 	.periodic-grid {
 		display: grid;
-		grid-template-columns: repeat(18, minmax(var(--cell-min, 3.5rem), 1fr));
+		--cell: 3.75rem;
+		--cell-min: 2.75rem;
+		grid-template-columns: repeat(18, minmax(var(--cell-min), 1fr));
 		grid-template-rows: repeat(10, auto);
 		gap: 0.25rem;
 		padding: 1rem;
 		outline: 1px solid blue;
-    width: 100%;
+		width: 100%;
 	}
 
-  @media (max-width: 1100px) {
-    .table-wrapper {overflow-x: auto;}
-    .periodic-grid {width: max-content; min-width: 100%;}
-  }
+	/* Container queries: adjust tile size as the table column gets narrower */
+	@container table (max-width: 1400px) {
+		.periodic-grid {
+			--cell: 3.25rem;
+		} /* ~52px */
+	}
+	@container table (max-width: 1200px) {
+		.periodic-grid {
+			--cell: 3rem;
+		} /* 48px */
+	}
+	@container table (max-width: 1050px) {
+		.periodic-grid {
+			--cell: 2.75rem;
+		} /* 44px (AA floor) */
+	}
+	@container table (max-width: 980px) {
+		.table-wrapper {
+			overflow-x: auto;
+		}
+		.periodic-grid {
+			width: max-content;
+			min-width: 100%;
+		}
+	}
+
+	@media (max-width: 1100px) {
+		.table-wrapper {
+			overflow-x: auto;
+		}
+		.periodic-grid {
+			width: max-content;
+			min-width: 100%;
+		}
+	}
 
 	@media (max-width: 700px) {
 		.table-wrapper {
