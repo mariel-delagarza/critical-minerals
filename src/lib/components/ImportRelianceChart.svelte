@@ -3,6 +3,10 @@
 	import { onMount } from 'svelte';
 	import Highcharts from 'highcharts';
 
+  export let element;
+
+  $: console.log('ImportRelianceChart got element: ', element)
+
 	onMount(() => {
 		Highcharts.chart('reliance-container', {
 			chart: {

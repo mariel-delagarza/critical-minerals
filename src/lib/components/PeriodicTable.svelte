@@ -1,9 +1,9 @@
 <script>
 	import Element from '$lib/components/Element.svelte';
 	import TableButtons from './TableButtons.svelte';
+	import { selectedElement } from '$lib/stores/selectedElement';
 
 	export let dataArray;
-
 	let activeFilter = 'all';
 
 	function setFilter(filter) {
@@ -24,14 +24,29 @@
 	<TableButtons {activeFilter} on:filterChange={(e) => setFilter(e.detail.id)} />
 	<div class="periodic-grid">
 		{#each dataArray as element}
-			<div class="cell" style="grid-column: {element.xpos}; grid-row: {element.ypos};">
+			<button
+				class="cell"
+				style="grid-column: {element.xpos}; grid-row: {element.ypos};"
+				on:click={() => selectedElement.set(element)}
+				aria-label="Select {element.name}"
+			>
 				<Element {element} {activeFilter} highlight={shouldHighlight(element)} />
-			</div>
+			</button>
 		{/each}
 	</div>
 </div>
 
 <style>
+	/* Make cells keyboard-accessible without messing styles */
+	.cell {
+		padding: 0;
+		border: 0;
+		background: transparent;
+		cursor: pointer;
+	}
+	.cell:focus-visible {
+		outline: 2px solid #333;
+	}
 	.table-wrapper {
 		outline: 1px solid green;
 	}
