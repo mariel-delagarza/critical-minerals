@@ -85,20 +85,16 @@
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
-		font-size: 1.125em;
-		/* width: 4.5rem;
-		height: 4.5rem; */
-    /* width: 100%;
-    height: 100%; */
-    width: 100%; 
-    aspect-ratio: 1/1;
+		font-size: clamp(0.9rem, calc(var(--cell) * 0.28), 1.125rem);
+		width: 100%;
+		aspect-ratio: 1/1;
 		text-align: center;
 		background-color: white;
 		transition: background-color 0.3s;
 		box-shadow: 0 0 2px rgba(0, 0, 0, 0.6);
 	}
 	.number {
-		font-size: 1rem;
+		font-size: clamp(0.7rem, calc(var(--cell) * 0.20), 1rem);
 		color: #000;
 	}
 
@@ -128,7 +124,7 @@
 
 	.symbol {
 		font-weight: bold;
-		font-size: 1.5rem;
+		font-size: clamp(1rem, calc(var(--cell) * 0.58), 1.5rem);
 	}
 
 	/* -------------------- DOI, DOE, DLA ------------------- */
