@@ -4,7 +4,6 @@
 	import Map from '$lib/components/Map.svelte';
 	import { selectedElement } from '$lib/stores/selectedElement';
 
-	export let dataArray;
 </script>
 
 <div class="detail-panel">
