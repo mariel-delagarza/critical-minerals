@@ -72,14 +72,13 @@ export async function getData() {
 
 		// Loop over all possible material columns
 		for (let i = 1; i <= 5; i++) {
-			// adjust 5 if you might have more
 			const labelCol = row[`net_import_reliance_percentage_of${i}_label`];
 			if (!labelCol) continue; // skip if no label in this slot
 
 			let materialName = labelCol.trim();
 			materials[materialName] = {};
 
-			// Loop over years 2020–2024 (adjust as needed)
+			// Loop over years 2020–2024
 			for (let year = 2020; year <= 2024; year++) {
 				const yearCol = row[`${year}_${i}`]; // e.g. "2020_1", "2020_2"
 				const parsed = parseYearData(yearCol);
@@ -100,12 +99,12 @@ export async function getData() {
 
 				// split and pick the value for this material (i is 1-based)
 				const parts = raw.split(';').map((s) => s.trim());
-				const valStr = parts[i - 1]; // may be undefined if not provided
+				const valStr = parts[i - 1]; 
 				if (valStr == null || valStr === '') return;
 
 				const num = Number(valStr);
 				if (!Number.isNaN(num)) {
-					imports[country] = num; // store the % (or whatever unit your sheet uses)
+					imports[country] = num; // store the % 
 				}
 			});
 
@@ -128,7 +127,7 @@ export async function getData() {
 			'2022_doi_list': isTrue(row['2022_doi_list']),
 			dla_materials_of_interest: isTrue(row.dla_materials_of_interest),
 			notes: row.notes || null,
-			materials // ✅ dynamic object of all materials + years
+			materials // dynamic object of all materials + years
 		};
 
 		return element;
