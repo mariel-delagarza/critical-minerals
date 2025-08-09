@@ -57,10 +57,7 @@
 
 	<figure class="highcharts-figure">
 		<div id="map-container"></div>
-		<p class="highcharts-description">
-			A basic column chart comparing estimated corn and wheat production in some countries. The
-			chart is making use of the axis crosshair feature, to highlight the hovered country.
-		</p>
+
 	</figure>
 </div>
 

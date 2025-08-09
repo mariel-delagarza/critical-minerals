@@ -52,6 +52,7 @@ function rowsFromElement(el) {
     min-height: 700px;
     padding: 0 1rem;
     font-size: 1.125rem;
+    width: 100%;
   }
 
   .bars h3 {
@@ -61,11 +62,11 @@ function rowsFromElement(el) {
   }
   .bar-row {
     display: grid;
-    grid-template-columns: 140px 56px 1fr;
+    grid-template-columns: 100px 56px 1fr;
     align-items: center;
     gap: 8px;
     margin-bottom: 12px;
   }
-  .bar-track { height: 20px; background: #EEE6D8; overflow: hidden; }
+  .bar-track { height: 10px; background: #EEE6D8; overflow: hidden; }
   .bar { height: 100%; background: #5a175d; transition: width 500ms ease; }
 </style>
