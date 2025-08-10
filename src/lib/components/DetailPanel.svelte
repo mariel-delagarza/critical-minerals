@@ -9,6 +9,7 @@
   console.log(allElements.data)
 	$: text = $selectedElement?.notes;
 	$: name = $selectedElement?.name;
+  $: selectedSymbol = $selectedElement?.symbol ?? null;
 
 	/* Put together statement about what lists element is on*/
 	let doi_label = 'Department of Interior';
@@ -33,6 +34,7 @@
 
 <div class="detail-panel">
 	<h2>{name}</h2>
+        <AllValuesChart mode="all" elements={allElements.data}  selectedSymbol={selectedSymbol}/>
 	<p>{name} is on the critical minerals {listStatement}. {text}</p>
 	{#if $selectedElement}
 		{#each Object.entries($selectedElement.materials) as [materialName, materialData]}
@@ -49,7 +51,6 @@
 	{#if $selectedElement}
 		<!-- <Map element={$selectedElement} /> -->
 		<div id="charts">
-      <AllValuesChart elements={allElements.data}/>
 			<!-- <ImportValuesChart element={$selectedElement} /> -->
 			<ImportRelianceChart element={$selectedElement} />
 		</div>
