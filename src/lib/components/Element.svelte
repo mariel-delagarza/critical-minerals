@@ -9,8 +9,6 @@
 	const isDLA = element.dla_materials_of_interest;
 	let bins;
 
-	console.log(element.symbol, nirBins);
-	console.log(nirBins?.[0]);
 
 	$: listCount = [isDOI, isDOE, isDLA].filter(Boolean).length;
 
@@ -26,7 +24,7 @@
 			else next = 'bNA';
 		}
 		bins = next;
-		console.log(bins);
+		console.log(element.name, bins);
 	}
 
 	$: classes =
@@ -57,13 +55,69 @@
 									? 'dla'
 									: ''
 				}`;
+  const BIN_COLORS = {
+    b0_25:'#e8f5e9', b26_75:'#c8e6c9', b76_99:'#81c784', b100:'#388e3c', bNA:'#f3f4f6'
+  };
+  const ORDER = ['b0_25','b26_75','b76_99','b100','bNA']; // sort so it’s predictable
+
+  let binsArr = [];   // <-- ALL bins for this element
+  let nirStyle = '';  // inline background
+
+  // Collect ALL bins (dedup + sorted) when NIR is active
+  $: {
+    if (activeFilter === 'nir') {
+      const arr = Array.isArray(nirBins) ? nirBins.filter(Boolean) : [];
+      const uniq = Array.from(new Set(arr));
+      binsArr = uniq.length ? uniq.sort((a,b)=>ORDER.indexOf(a)-ORDER.indexOf(b)) : ['bNA'];
+    } else {
+      binsArr = [];
+    }
+    console.log(element.name, 'binsArr:', binsArr);
+  }
+
+  // Build gradient from binsArr (1 = solid, 2 = 50/50, 3+ = equal segments)
+  $: {
+    if (activeFilter !== 'nir') { nirStyle = ''; }
+    else {
+      const cs = binsArr.map(b => BIN_COLORS[b] || BIN_COLORS.bNA);
+      if (cs.length <= 1) {
+        nirStyle = `background:${cs[0] || BIN_COLORS.bNA};`;
+      } else if (cs.length === 2) {
+        nirStyle = `background:linear-gradient(135deg, ${cs[0]} 0 50%, ${cs[1]} 50% 100%);`;
+      } else {
+        const stops = cs.map((c,i,arr)=>{
+          const s = Math.round((i/arr.length)*100);
+          const e = Math.round(((i+1)/arr.length)*100);
+          return `${c} ${s}% ${e}%`;
+        }).join(', ');
+        nirStyle = `background:linear-gradient(135deg, ${stops});`;
+      }
+    }
+  }
+
+  // Classes: either NIR or your existing list classes
+  $: classes =
+    activeFilter === 'nir'
+      ? 'element nir'
+      : `element ${
+          listCount === 3 ? 'three-lists'
+          : isDOI && isDOE ? 'doi-doe'
+          : isDOI && isDLA ? 'doi-dla'
+          : isDOE && isDLA ? 'doe-dla'
+          : isDOI ? 'doi'
+          : isDOE ? 'doe'
+          : isDLA ? 'dla'
+          : ''
+        }`;
+
+  // Optional: flip text to white if any dark bin present
+  $: lightText = activeFilter === 'nir' && binsArr.some(b => b==='b76_99' || b==='b100');
 </script>
 
-<div class={classes}>
-	<div class="number">{element.atomic_number}</div>
-	<div class="symbol">{element.symbol}</div>
+<div class={classes} style={nirStyle}>
+  <div class="number" style={lightText ? 'color:#fff' : ''}>{element.atomic_number}</div>
+  <div class="symbol" style={lightText ? 'color:#fff' : ''}>{element.symbol}</div>
 </div>
-
 <style>
 	/* --------------- Element, Number, Symbol -------------- */
 
