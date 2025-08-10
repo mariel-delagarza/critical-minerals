@@ -23,25 +23,6 @@
 		return false;
 	}
 
-	// --- 2024 NIR helpers (sheet slots 1..3) ---
-	const BIN_COLORS = {
-		b0_25: '#e8f5e9',
-		b26_75: '#c8e6c9',
-		b76_99: '#81c784',
-		b100: '#388e3c',
-		bNA: '#f3f4f6'
-	};
-
-	const toNum = (v) => (v == null || v === '' ? null : +`${v}`.replace('%', ''));
-
-	function binFor(pct) {
-		if (pct === null) return 'bNA';
-		if (pct === 100) return 'b100';
-		if (pct <= 25) return 'b0_25';
-		if (pct > 75) return 'b76_99';
-		return 'b26_75';
-	}
-
 	// Return DISTINCT bins present for this element across materials (2024)
 	function nirBinsForElement(el) {
 		const bins = new Set(
@@ -55,10 +36,6 @@
 		return Array.from(bins); // e.g. ['b26_75'] or ['b26_75','b76_99']
 	}
 
-	// For text color: if any dark bin present, use white text
-	function needsLightText(bins) {
-		return bins.some((b) => b === 'b76_99' || b === 'b100');
-	}
 	onMount(() => {
 		const update = () => (wrapperHeight = wrapperEl?.clientHeight ?? 0);
 		update(); // initial
