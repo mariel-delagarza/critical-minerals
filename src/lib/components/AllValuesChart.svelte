@@ -21,14 +21,14 @@
 		width: 3.5, // thicker line
 		shadow: {
 			// persistent glow
-			color: 'rgba(255,255,255,1)', // bright halo against beige
-			width: 12, // blur radius
+			color: 'rgba(255,255,255,0.85)', // bright halo against beige
+			width: 8, // blur radius
 			offsetX: 0,
 			offsetY: 0,
 			opacity: 0.85
 		}
 	};
-	const INACTIVE_OPACITY = 0.2; // tweak to taste
+	const INACTIVE_OPACITY = 0.28; // tweak to taste
 
 	// Parse "90" / "90%" -> number
 	const toNum = (v) => {
@@ -124,79 +124,29 @@
 	}
 
 	// Highlight logic -----------------------------------------------------------
-	// function applyFocus(sym) {
-	// 	if (!chart) return;
-	// 	const hasTarget = !!sym;
-	// 	chart.series.forEach((s) => {
-	// 		// store original color once
-	// 		if (s.userOptions && !s.userOptions._origColor) {
-	// 			s.userOptions._origColor = s.userOptions.color ?? s.color;
-	// 		}
-	// 		const isTarget = hasTarget && s.userOptions?.custom?.symbol === sym;
-	// 		if (isTarget) {
-	// 			s.update({ color: s.userOptions._origColor, lineWidth: 3, zIndex: 5 }, false);
-	// 			s.setState('');
-	// 		} else if (hasTarget) {
-	// 			s.update({ color: '#808080', lineWidth: 1.1, zIndex: 1 }, false);
-	// 			s.setState('inactive');
-	// 		} else {
-	// 			// clear focus: restore
-	// 			s.update({ color: s.userOptions._origColor, lineWidth: 1.2, zIndex: 1 }, false);
-	// 			s.setState('');
-	// 		}
-	// 	});
-	// 	chart.redraw();
-	// }
-
-function applyFocus(sym) {
-  if (!chart) return;
-  const hasTarget = !!sym;
-
-  chart.series.forEach((s) => {
-    if (!s.userOptions._origColor) {
-      s.userOptions._origColor = s.userOptions.color ?? s.color;
-    }
-    const orig = s.userOptions._origColor;
-    const isTarget = hasTarget && s.userOptions?.custom?.symbol === sym;
-
-    if (isTarget) {
-      // Add glow by creating a "halo" series under the active one
-      const haloSeries = chart.addSeries({
-        type: 'line',
-        data: s.options.data,
-        color: orig,
-        lineWidth: 5, // thick glow
-        opacity: 0.25,
-        enableMouseTracking: false,
-        zIndex: 0,
-        linkedTo: ':previous' // ties legend toggle to the main series
-      }, false);
-
-      // Bring main line to front and thicken
-      s.update({
-        color: orig,
-        lineWidth: 3,
-        zIndex: 10
-      }, false);
-
-    } else if (hasTarget) {
-      const faded = Highcharts.color(orig).setOpacity(0.25).get();
-      s.update({
-        color: faded,
-        lineWidth: 1.2,
-        zIndex: 1
-      }, false);
-    } else {
-      s.update({
-        color: orig,
-        lineWidth: 1.2,
-        zIndex: 1
-      }, false);
-    }
-  });
-
-  chart.redraw();
-}
+	function applyFocus(sym) {
+		if (!chart) return;
+		const hasTarget = !!sym;
+		chart.series.forEach((s) => {
+			// store original color once
+			if (s.userOptions && !s.userOptions._origColor) {
+				s.userOptions._origColor = s.userOptions.color ?? s.color;
+			}
+			const isTarget = hasTarget && s.userOptions?.custom?.symbol === sym;
+			if (isTarget) {
+				s.update({ color: s.userOptions._origColor, lineWidth: 5, zIndex: 5 }, false);
+				s.setState('');
+			} else if (hasTarget) {
+				s.update({ color: '#808080', lineWidth: 1.1, zIndex: 1 }, false);
+				s.setState('inactive');
+			} else {
+				// clear focus: restore
+				s.update({ color: s.userOptions._origColor, lineWidth: 1.2, zIndex: 1 }, false);
+				s.setState('');
+			}
+		});
+		chart.redraw();
+	}
 
 	// React when parent changes selectedSymbol
 	$: if (chart) applyFocus(selectedSymbol);
@@ -235,7 +185,7 @@ function applyFocus(sym) {
 					animation: { duration: 400 },
 					lineWidth: 1.2,
 					marker: { enabled: false },
-					states: { inactive: { opacity: 1 }, hover: { enabled: false } }
+					states: { inactive: { opacity: 0.3 }, hover: { enabled: false } }
 				}
 			},
 			tooltip: { enabled: false }, // fully quiet; set to true if you still want it
