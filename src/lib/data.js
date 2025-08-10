@@ -72,7 +72,7 @@ export async function getData() {
 
 		// Loop over all possible material columns
 		for (let i = 1; i <= 5; i++) {
-			const labelCol = row[`net_import_reliance_percentage_of${i}_label`];
+			const labelCol = row[`net_import_reliance_percentage_of_${i}_label`];
 			if (!labelCol) continue; // skip if no label in this slot
 
 			let materialName = labelCol.trim();
@@ -90,6 +90,7 @@ export async function getData() {
 			materials[materialName]['applications'] = row[`applications_${i}`];
 			materials[materialName][`importNumbersFor`] = row[`import_numbers_for_${i}`];
 			materials[materialName][`primaryImportSource`] = row[`primary_import_source_${i}`];
+      materials[materialName]['applications'] = row[`applications_${i}`]
 
 			// Build imports object for this material from country columns
 			const imports = {};
@@ -118,7 +119,7 @@ export async function getData() {
 		const element = {
 			atomic_number: +row.atomic_number,
 			symbol: row.symbol,
-			name: row.name,
+			name: row.name, 
 			xpos: +row.xpos,
 			ypos: +row.ypos,
 			series: row.series,
@@ -127,7 +128,8 @@ export async function getData() {
 			'2022_doi_list': isTrue(row['2022_doi_list']),
 			dla_materials_of_interest: isTrue(row.dla_materials_of_interest),
 			notes: row.notes || null,
-			materials // dynamic object of all materials + years
+			materials, // dynamic object of all materials + years
+      net_import_reliance_percentage_of: row.net_import_reliance_percentage_of_1
 		};
 
 		return element;

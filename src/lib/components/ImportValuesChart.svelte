@@ -1,114 +1,108 @@
 <script>
-	import { onMount } from 'svelte';
+	import { onMount, onDestroy } from 'svelte';
 	import Highcharts from 'highcharts';
 
-	onMount(() => {
-		Highcharts.chart('values-container', {
-			title: {
-				text: 'U.S Solar Employment Growth',
-				align: 'left'
-			},
+	export let element;
 
-			subtitle: {
-				text: 'By Job Category. Source: <a href="https://irecusa.org/programs/solar-jobs-census/" target="_blank">IREC</a>.',
-				align: 'left'
-			},
+	let wrapperEl; // the 2‑col wrapper
+	let containerEl; // the chart div
+	let chart;
+	let ro; // ResizeObserver
 
-			yAxis: {
-				title: {
-					text: 'Number of Employees'
-				}
-			},
+	function toSeries(el) {
+		if (!el?.materials) return { years: [], series: [] };
+		const yearSet = new Set();
+		for (const mat of Object.values(el.materials)) {
+			Object.keys(mat || {}).forEach((k) => {
+				if (/^\d{4}$/.test(k)) yearSet.add(+k);
+			});
+		}
+		const years = [...yearSet].sort((a, b) => a - b).map(String);
 
-			xAxis: {
-				accessibility: {
-					rangeDescription: 'Range: 2010 to 2022'
-				}
-			},
-
-			legend: {
-				layout: 'vertical',
-				align: 'right',
-				verticalAlign: 'middle'
-			},
-
-			plotOptions: {
-				series: {
-					label: {
-						connectorAllowed: false
-					},
-					pointStart: 2010
-				}
-			},
-
-			series: [
-				{
-					name: 'Installation & Developers',
-					data: [
-						43934, 48656, 65165, 81827, 112143, 142383, 171533, 165174, 155157, 161454, 154610,
-						168960, 171558
-					]
-				},
-				{
-					name: 'Manufacturing',
-					data: [
-						24916, 37941, 29742, 29851, 32490, 30282, 38121, 36885, 33726, 34243, 31050, 33099,
-						33473
-					]
-				},
-				{
-					name: 'Sales & Distribution',
-					data: [
-						11744, 30000, 16005, 19771, 20185, 24377, 32147, 30912, 29243, 29213, 25663, 28978,
-						30618
-					]
-				},
-				{
-					name: 'Operations & Maintenance',
-					data: [null, null, null, null, null, null, null, null, 11164, 11218, 10077, 12530, 16585]
-				},
-				{
-					name: 'Other',
-					data: [
-						21908, 5548, 8105, 11248, 8989, 11816, 18274, 17300, 13053, 11906, 10073, 11471, 11648
-					]
-				}
-			],
-
-			responsive: {
-				rules: [
-					{
-						condition: {
-							maxWidth: 500
-						},
-						chartOptions: {
-							legend: {
-								layout: 'horizontal',
-								align: 'center',
-								verticalAlign: 'bottom'
-							}
-						}
-					}
-				]
-			}
+		const series = Object.entries(el.materials).map(([name, yearObj]) => {
+			const data = years.map((yr) => {
+				const rec = yearObj?.[yr];
+				return rec ? { y: +rec.value ?? null, year: +yr, ...rec } : { y: null, year: +yr };
+			});
+			return { name, data };
 		});
+
+		return { years, series };
+	}
+
+	$: ({ years, series } = toSeries(element));
+
+	$: if (chart) {
+		chart.xAxis[0].setCategories(years, false);
+		series.forEach((s, i) => {
+			if (chart.series[i]) {
+				chart.series[i].update({ name: s.name }, false);
+				chart.series[i].setData(s.data, false);
+			} else chart.addSeries(s, false);
+		});
+		while (chart.series.length > series.length) chart.series.at(-1).remove(false);
+		chart.redraw();
+	}
+
+	onMount(() => {
+		chart = Highcharts.chart(containerEl, {
+			chart: { type: 'line', backgroundColor: '#eee6d8', animation: true },
+			legend: { enabled: false },
+			title: { text: '' },
+			credits: { enabled: false },
+			xAxis: { categories: years },
+			yAxis: { min: 0, max: 100, title: { text: '' }, visible: false },
+			plotOptions: { series: { animation: { duration: 500 } }, line: { marker: { radius: 3 } } },
+			tooltip: {
+				useHTML: true,
+				formatter() {
+					const p = this.point;
+					const yn = (v) => (v ? 'Yes' : 'No');
+					return `<div><b>${this.series.name}</b> — ${p.year}<br/>
+            Value: <b>${p.y}%</b><br/>Net exporter: ${yn(p.netExporter)}<br/>
+            Greater than: ${yn(p.greaterThan)}<br/>Less than: ${yn(p.lessThan)}</div>`;
+				}
+			},
+			series
+		});
+
+		// Observe the FLEX ITEM, not an inner grid:
+		ro = new ResizeObserver(() => chart?.reflow());
+		ro.observe(wrapperEl);
+
+		// Nudge once after initial mount in case siblings render later
+		requestAnimationFrame(() => chart?.reflow());
+	});
+
+	onDestroy(() => {
+		ro?.disconnect();
+		chart?.destroy();
 	});
 </script>
 
-<div id="import-values-chart">
-	<strong>Import Values Chart</strong>
+<!-- Two-column layout -->
 
-	<figure class="highcharts-figure">
-		<div id="values-container"></div>
-		<p class="highcharts-description">
-			Basic line chart showing trends in a dataset. This chart includes the
-			<code>series-label</code> module, which adds a label to each line for enhanced readability.
-		</p>
+<section class="nir-root" bind:this={wrapperEl}>
+	<figure class="nir-figure">
+		<div class="nir-chart" bind:this={containerEl}></div>
 	</figure>
-</div>
+</section>
 
 <style>
-	#import-values-chart {
-		outline: 1px solid red;
+	.nir-root {
+		width: 100%;
+	} /* flex item fills its track */
+	.nir-figure {
+		margin: 0;
+		width: 100%;
+	}
+	.nir-chart {
+		width: 100%;
+		min-height: 260px;
+	}
+
+	/* Belt-and-suspenders: keep HC from clinging to an old inline width */
+	:global(.highcharts-container) {
+		width: 100% !important;
 	}
 </style>

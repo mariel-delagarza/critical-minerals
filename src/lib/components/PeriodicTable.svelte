@@ -36,11 +36,17 @@
 	<TableButtons {activeFilter} on:filterChange={(e) => setFilter(e.detail.id)} />
 	<div class="periodic-grid">
 		{#each dataArray as element}
+			{@const isOnList =
+				element['2022_doi_list'] ||
+				element.doe_critical_mineral ||
+				element.dla_materials_of_interest}
+
 			<button
 				class="cell"
 				style="grid-column: {element.xpos}; grid-row: {element.ypos};"
 				on:click={() => selectedElement.set(element)}
-				aria-label="Select {element.name}"
+				aria-label={isOnList ? `Select ${element.name}` : `${element.name} (not selectable)`}
+				disabled={!isOnList}
 			>
 				<Element {element} {activeFilter} highlight={shouldHighlight(element)} />
 			</button>
@@ -59,6 +65,10 @@
 		height: 100%;
 		display: block;
 	}
+
+  .cell:disabled {
+    color: #808080;
+  }
 	.cell:focus-visible {
 		outline: 2px solid #333;
 	}
