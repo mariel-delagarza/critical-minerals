@@ -18,11 +18,11 @@
 
 	// how the active line should look
 	const ACTIVE_STYLE = {
-		width: 3.5, // thicker line
+		width: 1.5, // thicker line
 		shadow: {
 			// persistent glow
 			color: 'rgba(255,255,255,0.85)', // bright halo against beige
-			width: 8, // blur radius
+			width: 1.5, // blur radius
 			offsetX: 0,
 			offsetY: 0,
 			opacity: 0.85
@@ -111,7 +111,10 @@
 		chart.xAxis[0].setCategories(years, false);
 		series.forEach((s, i) => {
 			if (chart.series[i]) {
-				chart.series[i].update({ name: s.name, custom: s.custom }, false);
+				chart.series[i].update(
+					{ name: s.name, custom: s.custom, marker: { enabled: true, symbol: 'circle', radius: 4 } },
+					false
+				);
 				chart.series[i].setData(s.data, false);
 			} else {
 				chart.addSeries(s, false);
@@ -134,10 +137,16 @@
 			}
 			const isTarget = hasTarget && s.userOptions?.custom?.symbol === sym;
 			if (isTarget) {
-				s.update({ color: s.userOptions._origColor, lineWidth: 5, zIndex: 5 }, false);
+				s.update({ color: s.userOptions._origColor, lineWidth: 5, zIndex: 5 ,         marker: {
+          enabled: true,          // 👈 turn markers ON for active
+          symbol: 'circle',
+          radius: 4,
+          lineWidth: 1,
+          enabledThreshold: 0     // never auto-hide
+        }}, false);
 				s.setState('');
 			} else if (hasTarget) {
-				s.update({ color: '#808080', lineWidth: 1.1, zIndex: 1 }, false);
+				s.update({ color: '#808080', lineWidth: 1.1, zIndex: 1, marker: {enabled: false}}, false);
 				s.setState('inactive');
 			} else {
 				// clear focus: restore
@@ -177,9 +186,17 @@
 				minPadding: 0,
 				maxPadding: 0
 			},
-			yAxis: { min: 0, max: 100, title: { text: '' }, gridLineColor: 'rgba(0,0,0,.08)' },
+			yAxis: {
+				min: 0,
+				max: 100,
+				title: { text: '' },
+				gridLineColor: 'rgba(0,0,0,.08)',
+				maxPadding: 1,
+				endOnTick: false
+			},
 			plotOptions: {
 				series: {
+					connectNulls: true,
 					enableMouseTracking: false, // <— no hover
 					pointPlacement: 'on',
 					animation: { duration: 400 },
