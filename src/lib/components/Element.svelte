@@ -2,38 +2,61 @@
 <script>
 	export let element;
 	export let activeFilter;
+	export let nirBins = []; // e.g. ['b26_75'] or ['b26_75','b76_99']
 
 	const isDOI = element['2022_doi_list'];
 	const isDOE = element.doe_critical_mineral;
 	const isDLA = element.dla_materials_of_interest;
+	let bins;
+
+	console.log(element.symbol, nirBins);
+	console.log(nirBins?.[0]);
 
 	$: listCount = [isDOI, isDOE, isDLA].filter(Boolean).length;
 
-	$: classes = `element ${
-		activeFilter === 'all'
-			? listCount === 3
-				? 'three-lists'
-				: isDOI && isDOE
-					? 'doi-doe'
-					: isDOI && isDLA
-						? 'doi-dla'
-						: isDOE && isDLA
-							? 'doe-dla'
-							: isDOI
-								? 'doi'
-								: isDOE
-									? 'doe'
-									: isDLA
-										? 'dla'
-										: ''
-			: activeFilter === 'doi' && isDOI
-				? 'doi'
-				: activeFilter === 'doe' && isDOE
-					? 'doe'
-					: activeFilter === 'dla' && isDLA
-						? 'dla'
-						: ''
-	}`;
+	// bin logic — pick a bin class or default
+	$: {
+		let next = '';
+		if (activeFilter === 'nir') {
+			const arr = Array.isArray(nirBins) ? nirBins : [];
+			if (arr.includes('b0_25')) next = 'b0_25';
+			else if (arr.includes('b26_75')) next = 'b26_75';
+			else if (arr.includes('b76_99')) next = 'b76_99';
+			else if (arr.includes('b100')) next = 'b100';
+			else next = 'bNA';
+		}
+		bins = next;
+		console.log(bins);
+	}
+
+	$: classes =
+		activeFilter === 'nir'
+			? `element ${bins}`
+			: `element ${
+					activeFilter === 'all'
+						? listCount === 3
+							? 'three-lists'
+							: isDOI && isDOE
+								? 'doi-doe'
+								: isDOI && isDLA
+									? 'doi-dla'
+									: isDOE && isDLA
+										? 'doe-dla'
+										: isDOI
+											? 'doi'
+											: isDOE
+												? 'doe'
+												: isDLA
+													? 'dla'
+													: ''
+						: activeFilter === 'doi' && isDOI
+							? 'doi'
+							: activeFilter === 'doe' && isDOE
+								? 'doe'
+								: activeFilter === 'dla' && isDLA
+									? 'dla'
+									: ''
+				}`;
 </script>
 
 <div class={classes}>
@@ -94,7 +117,7 @@
 		box-shadow: 0 0 2px rgba(0, 0, 0, 0.6);
 	}
 	.number {
-		font-size: clamp(0.7rem, calc(var(--cell) * 0.20), 1rem);
+		font-size: clamp(0.7rem, calc(var(--cell) * 0.2), 1rem);
 		color: #000;
 	}
 
@@ -127,6 +150,25 @@
 		font-size: clamp(1rem, calc(var(--cell) * 0.58), 1.5rem);
 	}
 
+	/* Bins*/
+
+	.b0_25 {
+		background-color: #e8f5e9;
+	}
+
+	.b26_75 {
+		background-color: #c8e6c9;
+	}
+
+	.b76_99 {
+		background-color: #81c784;
+	}
+	.b100 {
+		background-color: #388e3c;
+	}
+	.bNA {
+		background-color: #f3f4f6;
+	}
 	/* -------------------- DOI, DOE, DLA ------------------- */
 
 	.doi {

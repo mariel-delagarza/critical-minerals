@@ -1,4 +1,3 @@
-<!-- src/lib/components/TableButtons.svelte -->
 <script>
 	import { createEventDispatcher } from 'svelte';
 	const dispatch = createEventDispatcher();
@@ -9,7 +8,9 @@
 		{ id: 'all', label: 'All Lists' },
 		{ id: 'doi', label: '2022 DOI' },
 		{ id: 'doe', label: 'DOE' },
-		{ id: 'dla', label: 'DLA' }
+		{ id: 'dla', label: 'DLA' },
+    { id: 'nir', label: 'Import Reliance' } 
+
 	];
 
 	function changeFilter(id) {
