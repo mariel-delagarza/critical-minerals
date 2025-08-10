@@ -9,7 +9,7 @@
 		{ id: 'doi', label: '2022 DOI' },
 		{ id: 'doe', label: 'DOE' },
 		{ id: 'dla', label: 'DLA' },
-    { id: 'nir', label: 'Import Reliance' } 
+    { id: 'nir', label: 'Import Reliance (2024)' } 
 
 	];
 

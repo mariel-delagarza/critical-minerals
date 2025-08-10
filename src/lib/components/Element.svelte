@@ -56,7 +56,7 @@
 									: ''
 				}`;
   const BIN_COLORS = {
-    b0_25:'#e8f5e9', b26_75:'#c8e6c9', b76_99:'#81c784', b100:'#388e3c', bNA:'#f3f4f6'
+    b0_25:'#11b3ee', b26_75:'#0d90bf', b76_99:'#0b7399', b100:'#074f69', bNA:'#fff'
   };
   const ORDER = ['b0_25','b26_75','b76_99','b100','bNA']; // sort so it’s predictable
 
@@ -94,21 +94,6 @@
       }
     }
   }
-
-  // Classes: either NIR or your existing list classes
-  $: classes =
-    activeFilter === 'nir'
-      ? 'element nir'
-      : `element ${
-          listCount === 3 ? 'three-lists'
-          : isDOI && isDOE ? 'doi-doe'
-          : isDOI && isDLA ? 'doi-dla'
-          : isDOE && isDLA ? 'doe-dla'
-          : isDOI ? 'doi'
-          : isDOE ? 'doe'
-          : isDLA ? 'dla'
-          : ''
-        }`;
 
   // Optional: flip text to white if any dark bin present
   $: lightText = activeFilter === 'nir' && binsArr.some(b => b==='b76_99' || b==='b100');
