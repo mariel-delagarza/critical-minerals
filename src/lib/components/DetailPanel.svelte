@@ -1,9 +1,12 @@
 <script>
 	import ImportRelianceChart from '$lib/components/ImportRelianceChart.svelte';
 	import ImportValuesChart from '$lib/components/ImportValuesChart.svelte';
+	import AllValuesChart from './AllValuesChart.svelte';
 	import Map from '$lib/components/Map.svelte';
 	import { selectedElement } from '$lib/stores/selectedElement';
 
+	export let allElements = [];
+  console.log(allElements.data)
 	$: text = $selectedElement?.notes;
 	$: name = $selectedElement?.name;
 
@@ -30,7 +33,7 @@
 
 <div class="detail-panel">
 	<h2>{name}</h2>
-	<p>{name} is on the critical minerals {listStatement}. {text} </p>
+	<p>{name} is on the critical minerals {listStatement}. {text}</p>
 	{#if $selectedElement}
 		{#each Object.entries($selectedElement.materials) as [materialName, materialData]}
 			{#if materialData.applications}
@@ -46,7 +49,8 @@
 	{#if $selectedElement}
 		<!-- <Map element={$selectedElement} /> -->
 		<div id="charts">
-			<ImportValuesChart element={$selectedElement} />
+      <AllValuesChart elements={allElements.data}/>
+			<!-- <ImportValuesChart element={$selectedElement} /> -->
 			<ImportRelianceChart element={$selectedElement} />
 		</div>
 	{/if}

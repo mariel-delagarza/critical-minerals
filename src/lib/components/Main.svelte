@@ -21,7 +21,7 @@
 	</div>
 	<div class="content-row" style={`--row-h: ${wrapperHeight}px`}>
 		<PeriodicTable {dataArray} on:selectElement={handleSelect} bind:wrapperHeight />
-		<DetailPanel {selected} />
+		<DetailPanel {selected} allElements={data} />
 	</div>
 </div>
 
