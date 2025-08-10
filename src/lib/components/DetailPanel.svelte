@@ -4,7 +4,7 @@
 	import Map from '$lib/components/Map.svelte';
 	import { selectedElement } from '$lib/stores/selectedElement';
 
-	$: text = $selectedElement.notes;
+	$: text = $selectedElement?.notes;
 	$: name = $selectedElement?.name;
 
 	/* Put together statement about what lists element is on*/
