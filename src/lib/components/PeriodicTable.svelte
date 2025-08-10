@@ -22,6 +22,16 @@
 		if (activeFilter === 'dla') return element.dla_materials_of_interest;
 		return false;
 	}
+  
+	const toNum = (v) => (v == null || v === '' ? null : +`${v}`.replace('%', ''));
+
+	function binFor(pct) {
+		if (pct === null) return 'bNA';
+		if (pct === 100) return 'b100';
+		if (pct <= 25) return 'b0_25';
+		if (pct > 75) return 'b76_99';
+		return 'b26_75';
+	}
 
 	// Return DISTINCT bins present for this element across materials (2024)
 	function nirBinsForElement(el) {
@@ -36,6 +46,10 @@
 		return Array.from(bins); // e.g. ['b26_75'] or ['b26_75','b76_99']
 	}
 
+	// For text color: if any dark bin present, use white text
+	function needsLightText(bins) {
+		return bins.some((b) => b === 'b76_99' || b === 'b100');
+	}
 	onMount(() => {
 		const update = () => (wrapperHeight = wrapperEl?.clientHeight ?? 0);
 		update(); // initial
