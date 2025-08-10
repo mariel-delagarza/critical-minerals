@@ -22,7 +22,7 @@
 		if (activeFilter === 'dla') return element.dla_materials_of_interest;
 		return false;
 	}
-  
+
 	const toNum = (v) => (v == null || v === '' ? null : +`${v}`.replace('%', ''));
 
 	function binFor(pct) {
@@ -44,11 +44,6 @@
 		// If truly no 2024 values:
 		if (!bins.size) bins.add('bNA');
 		return Array.from(bins); // e.g. ['b26_75'] or ['b26_75','b76_99']
-	}
-
-	// For text color: if any dark bin present, use white text
-	function needsLightText(bins) {
-		return bins.some((b) => b === 'b76_99' || b === 'b100');
 	}
 	onMount(() => {
 		const update = () => (wrapperHeight = wrapperEl?.clientHeight ?? 0);
