@@ -34,7 +34,6 @@
 
 <div class="detail-panel">
 	<h2>{name}</h2>
-        <AllValuesChart mode="all" elements={allElements.data}  selectedSymbol={selectedSymbol}/>
 	<p>{name} is on the critical minerals {listStatement}. {text}</p>
 	{#if $selectedElement}
 		{#each Object.entries($selectedElement.materials) as [materialName, materialData]}
@@ -49,6 +48,7 @@
 		{/each}
 	{/if}
 	{#if $selectedElement}
+          <AllValuesChart mode="all" elements={allElements.data}  selectedSymbol={selectedSymbol}/>
 		<!-- <Map element={$selectedElement} /> -->
 		<div id="charts">
 			<!-- <ImportValuesChart element={$selectedElement} /> -->
