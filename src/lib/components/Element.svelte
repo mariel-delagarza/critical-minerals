@@ -24,7 +24,6 @@
 			else next = 'bNA';
 		}
 		bins = next;
-		console.log(element.name, bins);
 	}
 
 	$: classes =
@@ -72,7 +71,6 @@
     } else {
       binsArr = [];
     }
-    console.log(element.name, 'binsArr:', binsArr);
   }
 
   // Build gradient from binsArr (1 = solid, 2 = 50/50, 3+ = equal segments)

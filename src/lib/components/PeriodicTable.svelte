@@ -5,11 +5,13 @@
 	import { onMount, onDestroy } from 'svelte';
 
 	export let dataArray;
+  export let rareEarthNames;
 	export let wrapperHeight = 0;
 	let activeFilter = 'all';
 	let wrapperEl;
 	let ro;
 
+  console.log(rareEarthNames)
 	function setFilter(filter) {
 		activeFilter = filter;
 		console.log('New filter selected:', activeFilter);

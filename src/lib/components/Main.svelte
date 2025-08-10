@@ -12,6 +12,11 @@
 	function handleSelect(e) {
 		selected = e.detail; // an element object
 	}
+
+  	// Build rare earth list (excluding Scandium & Yttrium)
+	const rareEarthNames = dataArray
+		.filter(el => el.rare_earth === true && el.name !== 'Scandium' && el.name !== 'Yttrium')
+		.map(el => el.name);
 </script>
 
 <div class="main-layout">
@@ -20,7 +25,7 @@
 		<Legend />
 	</div>
 	<div class="content-row" style={`--row-h: ${wrapperHeight}px`}>
-		<PeriodicTable {dataArray} on:selectElement={handleSelect} bind:wrapperHeight />
+		<PeriodicTable {rareEarthNames} {dataArray} on:selectElement={handleSelect} bind:wrapperHeight />
 		<DetailPanel {selected} allElements={data} />
 	</div>
 </div>
