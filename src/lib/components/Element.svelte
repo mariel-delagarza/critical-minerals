@@ -56,7 +56,7 @@
 									: ''
 				}`;
   const BIN_COLORS = {
-    b0_25:'#11b3ee', b26_75:'#0d90bf', b76_99:'#0b7399', b100:'#074f69', bNA:'#fff'
+    b0_25:'#b2dfee', b26_75:'#6fbfd5', b76_99:'#2e8da5', b100:'#074e67', bNA:'#fff'
   };
   const ORDER = ['b0_25','b26_75','b76_99','b100','bNA']; // sort so it’s predictable
 
