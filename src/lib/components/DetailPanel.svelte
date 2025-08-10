@@ -30,7 +30,7 @@
 
 <div class="detail-panel">
 	<h2>{name}</h2>
-	<p>{name} is on the critical minerals {listStatement}. {text}</p>
+	<p>{name} is on the critical minerals {listStatement}. {text} </p>
 	{#if $selectedElement}
 		{#each Object.entries($selectedElement.materials) as [materialName, materialData]}
 			{#if materialData.applications}
