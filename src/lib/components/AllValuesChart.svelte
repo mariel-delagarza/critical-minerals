@@ -221,13 +221,17 @@
 </script>
 
 <section class="allvals-root" bind:this={wrapperEl}>
+  <h3>Net Import Reliance, 2020 - 2024</h3>
 	<figure class="allvals-figure">
 		<div class="allvals-chart" bind:this={containerEl}></div>
 	</figure>
 </section>
 
 <style>
-	.allvals-chart {
+.allvals-root {
+  margin-top: 1.25rem;
+}
+.allvals-chart {
 		width: 100%;
 		min-height: 560px;
 	}

@@ -6,10 +6,10 @@
 	import { selectedElement } from '$lib/stores/selectedElement';
 
 	export let allElements = [];
-  console.log(allElements.data)
+	console.log(allElements.data);
 	$: text = $selectedElement?.notes;
 	$: name = $selectedElement?.name;
-  $: selectedSymbol = $selectedElement?.symbol ?? null;
+	$: selectedSymbol = $selectedElement?.symbol ?? null;
 
 	/* Put together statement about what lists element is on*/
 	let doi_label = 'Department of Interior';
@@ -36,19 +36,22 @@
 	<h2>{name}</h2>
 	<p>{name} is on the critical minerals {listStatement}. {text}</p>
 	{#if $selectedElement}
+		<h3>Uses</h3>
 		{#each Object.entries($selectedElement.materials) as [materialName, materialData]}
 			{#if materialData.applications}
-				<h3>{materialName}</h3>
-				<ul>
-					{#each materialData.applications.split(';').map((a) => a.trim()) as app}
-						<li>{app}</li>
-					{/each}
-				</ul>
+				<details>
+					<summary>{materialName}</summary>
+					<ul>
+						{#each materialData.applications.split(';').map((a) => a.trim()) as app}
+							<li>{app}</li>
+						{/each}
+					</ul>
+				</details>
 			{/if}
 		{/each}
 	{/if}
 	{#if $selectedElement}
-          <AllValuesChart mode="all" elements={allElements.data}  selectedSymbol={selectedSymbol}/>
+		<AllValuesChart mode="all" elements={allElements.data} {selectedSymbol} />
 		<!-- <Map element={$selectedElement} /> -->
 		<div id="charts">
 			<!-- <ImportValuesChart element={$selectedElement} /> -->
