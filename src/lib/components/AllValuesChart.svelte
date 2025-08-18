@@ -228,6 +228,31 @@
 					states: { inactive: { opacity: 0.3 }, hover: { enabled: false } }
 				}
 			},
+			// tooltip: {
+			// 	useHTML: true,
+			// 	formatter() {
+			// 		const hoveredYear = this.point?.year;
+			// 		const series = this.series;
+			// 		const data = series?.data ?? [];
+			// 		const color = series.color || '#000';
+
+			// 		let output = `<strong style="margin-bottom: 16px; font-size:20px;">${series.name}</strong><br/>`;
+			// 		for (const point of data) {
+			// 			if (point.y != null) {
+			// 				const line = `${point.year}: ${point.y}%`;
+			// 				if (point.year === hoveredYear) {
+			// 					output += `<span style="color: ${color}; font-weight: bold; font-size: 20px;">${line}</span><br/>`;
+			// 				} else {
+			// 					output += `${line}<br/>`;
+			// 				}
+			// 			}
+			// 		}
+			// 		return output;
+			// 	},
+			// 	style: {
+			// 		fontSize: '16px'
+			// 	}
+			// },
 			tooltip: {
 				useHTML: true,
 				formatter() {
@@ -236,17 +261,31 @@
 					const data = series?.data ?? [];
 					const color = series.color || '#000';
 
-					let output = `<strong style="margin-bottom: 16px; font-size:20px;">${series.name}</strong><br/>`;
+					let output = `<span style="font-weight: bold; font-size: 20px;">${series.name}</span><br/>`;
+
 					for (const point of data) {
-						if (point.y != null) {
-							const line = `${point.year}: ${point.y}%`;
-							if (point.year === hoveredYear) {
-								output += `<span style="color: ${color}; font-weight: bold; font-size: 20px;">${line}</span><br/>`;
-							} else {
-								output += `${line}<br/>`;
-							}
+						const d = point?.raw ?? point; // if .raw exists, use it
+
+						let display;
+						if (d.netExporter) {
+							display = 'Net exporter';
+						} else if (d.greaterThan) {
+							display = `>${d.value}%`;
+						} else if (d.lessThan) {
+							display = `<${d.value}%`;
+						} else if (typeof d.value === 'number') {
+							display = `${d.value}%`;
+						} else {
+							display = '—';
+						}
+
+						if (point.year === hoveredYear) {
+							output += `<span style="color: ${color}; font-weight: bold; font-size: 20px;">${point.year}: ${display}</span><br/>`;
+						} else {
+							output += `${point.year}: ${display}<br/>`;
 						}
 					}
+
 					return output;
 				},
 				style: {
