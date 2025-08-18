@@ -47,6 +47,11 @@
 		if (!bins.size) bins.add('bNA');
 		return Array.from(bins); // e.g. ['b26_75'] or ['b26_75','b76_99']
 	}
+
+	function isNetExporter(el) {
+		return Object.values(el?.materials ?? {}).some((m) => m?.['2024']?.netExporter === true);
+	}
+
 	onMount(() => {
 		const update = () => (wrapperHeight = wrapperEl?.clientHeight ?? 0);
 		update(); // initial
@@ -67,6 +72,7 @@
 				<li><span class="swatch b76_99"></span> 76–99%</li>
 				<li><span class="swatch b100"></span> 100%</li>
 				<li><span class="swatch bNA"></span> Data not available</li>
+        <li><span class="swatch bNEG"></span> Net exporter</li>
 			</ul>
 		</div>
 	{/if}
@@ -78,7 +84,7 @@
 				element.doe_critical_mineral ||
 				element.dla_materials_of_interest}
 			<!-- get all bins for this element -->
-			{@const nirBins = nirBinsForElement(element)}
+			{@const nirBins = isNetExporter(element) ? ['bNEG'] : nirBinsForElement(element)}
 			<!-- DEBUG: log bins -->
 			{@html (() => {
 				// console.log(element.symbol || element.name, nirBins);
@@ -179,6 +185,15 @@
 	.nir-legend .bNA {
 		background: #fff;
 		border: 1px solid #ccc;
+	}
+
+	.nir-legend .bNEG {
+		background: #ccc; /* Or your preferred neutral gray */
+	}
+
+	.bNEG {
+		background-color: #888 !important;
+		color: #000;
 	}
 
 	/* Container queries: adjust tile size as the table column gets narrower */
