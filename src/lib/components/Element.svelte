@@ -9,7 +9,6 @@
 	const isDLA = element.dla_materials_of_interest;
 	let bins;
 
-
 	$: listCount = [isDOI, isDOE, isDLA].filter(Boolean).length;
 
 	// bin logic — pick a bin class or default
@@ -54,53 +53,62 @@
 									? 'dla'
 									: ''
 				}`;
-  const BIN_COLORS = {
-    b0_25:'#b2dfee', b26_75:'#6fbfd5', b76_99:'#2e8da5', b100:'#074e67', bNA:'#fff'
-  };
-  const ORDER = ['b0_25','b26_75','b76_99','b100','bNA']; // sort so it’s predictable
+	const BIN_COLORS = {
+		b0_25: '#b2dfee',
+		b26_75: '#6fbfd5',
+		b76_99: '#2e8da5',
+		b100: '#074e67',
+		bNA: '#fff',
+		bNEG: '#888'
+	};
+	const ORDER = ['b0_25', 'b26_75', 'b76_99', 'b100', 'bNEG', 'bNA'];
 
-  let binsArr = [];   // <-- ALL bins for this element
-  let nirStyle = '';  // inline background
+	let binsArr = []; // <-- ALL bins for this element
+	let nirStyle = ''; // inline background
 
-  // Collect ALL bins (dedup + sorted) when NIR is active
-  $: {
-    if (activeFilter === 'nir') {
-      const arr = Array.isArray(nirBins) ? nirBins.filter(Boolean) : [];
-      const uniq = Array.from(new Set(arr));
-      binsArr = uniq.length ? uniq.sort((a,b)=>ORDER.indexOf(a)-ORDER.indexOf(b)) : ['bNA'];
-    } else {
-      binsArr = [];
-    }
-  }
+	// Collect ALL bins (dedup + sorted) when NIR is active
+	$: {
+		if (activeFilter === 'nir') {
+			const arr = Array.isArray(nirBins) ? nirBins.filter(Boolean) : [];
+			const uniq = Array.from(new Set(arr));
+			binsArr = uniq.length ? uniq.sort((a, b) => ORDER.indexOf(a) - ORDER.indexOf(b)) : ['bNA'];
+		} else {
+			binsArr = [];
+		}
+	}
 
-  // Build gradient from binsArr (1 = solid, 2 = 50/50, 3+ = equal segments)
-  $: {
-    if (activeFilter !== 'nir') { nirStyle = ''; }
-    else {
-      const cs = binsArr.map(b => BIN_COLORS[b] || BIN_COLORS.bNA);
-      if (cs.length <= 1) {
-        nirStyle = `background:${cs[0] || BIN_COLORS.bNA};`;
-      } else if (cs.length === 2) {
-        nirStyle = `background:linear-gradient(135deg, ${cs[0]} 0 50%, ${cs[1]} 50% 100%);`;
-      } else {
-        const stops = cs.map((c,i,arr)=>{
-          const s = Math.round((i/arr.length)*100);
-          const e = Math.round(((i+1)/arr.length)*100);
-          return `${c} ${s}% ${e}%`;
-        }).join(', ');
-        nirStyle = `background:linear-gradient(135deg, ${stops});`;
-      }
-    }
-  }
+	// Build gradient from binsArr (1 = solid, 2 = 50/50, 3+ = equal segments)
+	$: {
+		if (activeFilter !== 'nir') {
+			nirStyle = '';
+		} else {
+			const cs = binsArr.map((b) => BIN_COLORS[b] || BIN_COLORS.bNA);
+			if (cs.length <= 1) {
+				nirStyle = `background:${cs[0] || BIN_COLORS.bNA};`;
+			} else if (cs.length === 2) {
+				nirStyle = `background:linear-gradient(135deg, ${cs[0]} 0 50%, ${cs[1]} 50% 100%);`;
+			} else {
+				const stops = cs
+					.map((c, i, arr) => {
+						const s = Math.round((i / arr.length) * 100);
+						const e = Math.round(((i + 1) / arr.length) * 100);
+						return `${c} ${s}% ${e}%`;
+					})
+					.join(', ');
+				nirStyle = `background:linear-gradient(135deg, ${stops});`;
+			}
+		}
+	}
 
-  // Optional: flip text to white if any dark bin present
-  $: lightText = activeFilter === 'nir' && binsArr.some(b => b==='b76_99' || b==='b100');
+	// Optional: flip text to white if any dark bin present
+	$: lightText = activeFilter === 'nir' && binsArr.some((b) => b === 'b76_99' || b === 'b100');
 </script>
 
 <div class={classes} style={nirStyle}>
-  <div class="number" style={lightText ? 'color:#fff' : ''}>{element.atomic_number}</div>
-  <div class="symbol" style={lightText ? 'color:#fff' : ''}>{element.symbol}</div>
+	<div class="number" style={lightText ? 'color:#fff' : ''}>{element.atomic_number}</div>
+	<div class="symbol" style={lightText ? 'color:#fff' : ''}>{element.symbol}</div>
 </div>
+
 <style>
 	/* --------------- Element, Number, Symbol -------------- */
 
@@ -206,6 +214,11 @@
 	.bNA {
 		background-color: #f3f4f6;
 	}
+	.bNEG {
+		background-color: #888;
+		font-style: italic;
+	}
+
 	/* -------------------- DOI, DOE, DLA ------------------- */
 
 	.doi {

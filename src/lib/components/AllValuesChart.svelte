@@ -59,7 +59,7 @@
 				name,
 				data,
 				type: 'line',
-				custom: { symbol: el.symbol ?? el.name, elementName: el.name ?? el.symbol } // <—
+				custom: { symbol: el.symbol ?? el.name, elementName: el.name ?? el.symbol }
 			};
 		});
 
@@ -112,7 +112,11 @@
 		series.forEach((s, i) => {
 			if (chart.series[i]) {
 				chart.series[i].update(
-					{ name: s.name, custom: s.custom, marker: { enabled: true, symbol: 'circle', radius: 4 } },
+					{
+						name: s.name,
+						custom: s.custom,
+						marker: { enabled: true, symbol: 'circle', radius: 4 }
+					},
 					false
 				);
 				chart.series[i].setData(s.data, false);
@@ -130,30 +134,49 @@
 	function applyFocus(sym) {
 		if (!chart) return;
 		const hasTarget = !!sym;
+
 		chart.series.forEach((s) => {
-			// store original color once
 			if (s.userOptions && !s.userOptions._origColor) {
 				s.userOptions._origColor = s.userOptions.color ?? s.color;
 			}
+
 			const isTarget = hasTarget && s.userOptions?.custom?.symbol === sym;
-			if (isTarget) {
-				s.update({ color: s.userOptions._origColor, lineWidth: 5, zIndex: 5 ,         marker: {
-          enabled: true,          // 👈 turn markers ON for active
-          symbol: 'circle',
-          radius: 4,
-          lineWidth: 1,
-          enabledThreshold: 0     // never auto-hide
-        }}, false);
-				s.setState('');
-			} else if (hasTarget) {
-				s.update({ color: '#808080', lineWidth: 1.1, zIndex: 1, marker: {enabled: false}}, false);
-				s.setState('inactive');
-			} else {
-				// clear focus: restore
-				s.update({ color: s.userOptions._origColor, lineWidth: 1.2, zIndex: 1 }, false);
-				s.setState('');
-			}
+
+			s.update(
+				isTarget
+					? {
+							color: s.userOptions._origColor,
+							lineWidth: 5,
+							zIndex: 5,
+							enableMouseTracking: true, // ✅ only target lines track mouse
+							marker: {
+								enabled: true,
+								symbol: 'circle',
+								radius: 4,
+								lineWidth: 1,
+								enabledThreshold: 0
+							}
+						}
+					: hasTarget
+						? {
+								color: '#808080',
+								lineWidth: 1.1,
+								zIndex: 1,
+								enableMouseTracking: false, // ❌ ignore mouse
+								marker: { enabled: false }
+							}
+						: {
+								color: s.userOptions._origColor,
+								lineWidth: 1.2,
+								zIndex: 1,
+								enableMouseTracking: false, // ❌ ignore mouse
+								marker: { enabled: false }
+							},
+				false
+			);
+			s.setState(isTarget ? '' : hasTarget ? 'inactive' : '');
 		});
+
 		chart.redraw();
 	}
 
@@ -197,7 +220,7 @@
 			plotOptions: {
 				series: {
 					connectNulls: true,
-					enableMouseTracking: false, // <— no hover
+					enableMouseTracking: true, // <— no hover
 					pointPlacement: 'on',
 					animation: { duration: 400 },
 					lineWidth: 1.2,
@@ -205,7 +228,70 @@
 					states: { inactive: { opacity: 0.3 }, hover: { enabled: false } }
 				}
 			},
-			tooltip: { enabled: false }, // fully quiet; set to true if you still want it
+			// tooltip: {
+			// 	useHTML: true,
+			// 	formatter() {
+			// 		const hoveredYear = this.point?.year;
+			// 		const series = this.series;
+			// 		const data = series?.data ?? [];
+			// 		const color = series.color || '#000';
+
+			// 		let output = `<strong style="margin-bottom: 16px; font-size:20px;">${series.name}</strong><br/>`;
+			// 		for (const point of data) {
+			// 			if (point.y != null) {
+			// 				const line = `${point.year}: ${point.y}%`;
+			// 				if (point.year === hoveredYear) {
+			// 					output += `<span style="color: ${color}; font-weight: bold; font-size: 20px;">${line}</span><br/>`;
+			// 				} else {
+			// 					output += `${line}<br/>`;
+			// 				}
+			// 			}
+			// 		}
+			// 		return output;
+			// 	},
+			// 	style: {
+			// 		fontSize: '16px'
+			// 	}
+			// },
+			tooltip: {
+				useHTML: true,
+				formatter() {
+					const hoveredYear = this.point?.year;
+					const series = this.series;
+					const data = series?.data ?? [];
+					const color = series.color || '#000';
+
+					let output = `<span style="font-weight: bold; font-size: 20px;">${series.name}</span><br/>`;
+
+					for (const point of data) {
+						const d = point?.raw ?? point; // if .raw exists, use it
+
+						let display;
+						if (d.netExporter) {
+							display = 'Net exporter';
+						} else if (d.greaterThan) {
+							display = `>${d.value}%`;
+						} else if (d.lessThan) {
+							display = `<${d.value}%`;
+						} else if (typeof d.value === 'number') {
+							display = `${d.value}%`;
+						} else {
+							display = '—';
+						}
+
+						if (point.year === hoveredYear) {
+							output += `<span style="color: ${color}; font-weight: bold; font-size: 20px;">${point.year}: ${display}</span><br/>`;
+						} else {
+							output += `${point.year}: ${display}<br/>`;
+						}
+					}
+
+					return output;
+				},
+				style: {
+					fontSize: '16px'
+				}
+			},
 			series
 		});
 
@@ -221,17 +307,17 @@
 </script>
 
 <section class="allvals-root" bind:this={wrapperEl}>
-  <h3>Net Import Reliance, 2020 - 2024</h3>
+	<h3>Net Import Reliance, 2020 - 2024</h3>
 	<figure class="allvals-figure">
 		<div class="allvals-chart" bind:this={containerEl}></div>
 	</figure>
 </section>
 
 <style>
-.allvals-root {
-  margin-top: 1.25rem;
-}
-.allvals-chart {
+	.allvals-root {
+		margin-top: 1.25rem;
+	}
+	.allvals-chart {
 		width: 100%;
 		min-height: 560px;
 	}

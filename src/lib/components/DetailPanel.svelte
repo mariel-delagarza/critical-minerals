@@ -33,9 +33,10 @@
 </script>
 
 <div class="detail-panel">
-	<h2>{name}</h2>
-	<p>{name} is on the critical minerals {listStatement}. {text}</p>
 	{#if $selectedElement}
+		<h2>{name}</h2>
+		<p>{name} is on the critical minerals {listStatement}. {@html text}</p>
+
 		<h3>Uses</h3>
 		{#each Object.entries($selectedElement.materials) as [materialName, materialData]}
 			{#if materialData.applications}
@@ -49,16 +50,19 @@
 				</details>
 			{/if}
 		{/each}
-	{/if}
-	{#if $selectedElement}
+
 		<AllValuesChart mode="all" elements={allElements.data} {selectedSymbol} />
-		<!-- <Map element={$selectedElement} /> -->
 		<div id="charts">
-			<!-- <ImportValuesChart element={$selectedElement} /> -->
 			<ImportRelianceChart element={$selectedElement} />
 		</div>
+	{:else}
+		<p>
+			Click on an element in the table to see details including its uses, the U.S. net import reliance,
+			and countries it is imported from.
+		</p>
 	{/if}
 </div>
+
 
 <style>
 	.detail-panel {

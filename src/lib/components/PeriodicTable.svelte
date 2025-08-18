@@ -5,13 +5,13 @@
 	import { onMount, onDestroy } from 'svelte';
 
 	export let dataArray;
-  export let rareEarthNames;
+	export let rareEarthNames;
 	export let wrapperHeight = 0;
 	let activeFilter = 'all';
 	let wrapperEl;
 	let ro;
 
-  console.log(rareEarthNames)
+	console.log(rareEarthNames);
 	function setFilter(filter) {
 		activeFilter = filter;
 		console.log('New filter selected:', activeFilter);
@@ -47,6 +47,11 @@
 		if (!bins.size) bins.add('bNA');
 		return Array.from(bins); // e.g. ['b26_75'] or ['b26_75','b76_99']
 	}
+
+	function isNetExporter(el) {
+		return Object.values(el?.materials ?? {}).some((m) => m?.['2024']?.netExporter === true);
+	}
+
 	onMount(() => {
 		const update = () => (wrapperHeight = wrapperEl?.clientHeight ?? 0);
 		update(); // initial
@@ -58,6 +63,20 @@
 
 <div class="table-wrapper periodic-table" bind:this={wrapperEl}>
 	<TableButtons {activeFilter} on:filterChange={(e) => setFilter(e.detail.id)} />
+	{#if activeFilter === 'nir'}
+		<div class="nir-legend">
+			<strong>Net Import Reliance (2024):</strong>
+			<ul>
+				<li><span class="swatch b0_25"></span> 0–25%</li>
+				<li><span class="swatch b26_75"></span> 26–75%</li>
+				<li><span class="swatch b76_99"></span> 76–99%</li>
+				<li><span class="swatch b100"></span> 100%</li>
+				<li><span class="swatch bNA"></span> Data not available</li>
+        <li><span class="swatch bNEG"></span> Net exporter</li>
+			</ul>
+		</div>
+	{/if}
+
 	<div class="periodic-grid">
 		{#each dataArray as element}
 			{@const isOnList =
@@ -65,7 +84,7 @@
 				element.doe_critical_mineral ||
 				element.dla_materials_of_interest}
 			<!-- get all bins for this element -->
-			{@const nirBins = nirBinsForElement(element)}
+			{@const nirBins = isNetExporter(element) ? ['bNEG'] : nirBinsForElement(element)}
 			<!-- DEBUG: log bins -->
 			{@html (() => {
 				// console.log(element.symbol || element.name, nirBins);
@@ -117,6 +136,64 @@
 		padding: 1rem;
 		outline: 1px solid blue;
 		width: 100%;
+	}
+
+	.nir-legend {
+		margin: 0 auto;
+		padding: 0.75rem 1rem;
+		background: #fff;
+		border: 1px solid #ccc;
+		border-radius: 0;
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+		font-size: 0.875rem;
+		line-height: 1.4;
+		width: fit-content;
+	}
+
+	.nir-legend ul {
+		display: flex;
+		gap: 1rem;
+		list-style: none;
+		padding: 0;
+		margin: 0.25rem 0 0;
+		flex-wrap: wrap;
+		align-items: center;
+	}
+
+	.nir-legend .swatch {
+		display: inline-block;
+		width: 1rem;
+		height: 1rem;
+		border-radius: 2px;
+		margin-right: 0.4em;
+		box-shadow: 0 0 1px rgba(0, 0, 0, 0.3);
+		vertical-align: middle;
+	}
+
+	.nir-legend .b0_25 {
+		background: #b2dfee;
+	}
+	.nir-legend .b26_75 {
+		background: #6fbfd5;
+	}
+	.nir-legend .b76_99 {
+		background: #2e8da5;
+	}
+	.nir-legend .b100 {
+		background: #074e67;
+	}
+	.nir-legend .bNA {
+		background: #fff;
+		border: 1px solid #ccc;
+	}
+
+	.nir-legend .bNEG {
+		background: #ccc; /* Or your preferred neutral gray */
+	}
+
+	.bNEG {
+		background-color: #888 !important;
+		color: #000;
 	}
 
 	/* Container queries: adjust tile size as the table column gets narrower */
