@@ -236,7 +236,7 @@
 					const data = series?.data ?? [];
 					const color = series.color || '#000';
 
-					let output = `<strong>${series.name}</strong><br/>`;
+					let output = `<strong style="margin-bottom: 16px; font-size:20px;">${series.name}</strong><br/>`;
 					for (const point of data) {
 						if (point.y != null) {
 							const line = `${point.year}: ${point.y}%`;
