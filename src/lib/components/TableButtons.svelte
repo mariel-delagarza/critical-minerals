@@ -1,4 +1,3 @@
-<!-- src/lib/components/TableButtons.svelte -->
 <script>
 	import { createEventDispatcher } from 'svelte';
 	const dispatch = createEventDispatcher();
@@ -9,7 +8,9 @@
 		{ id: 'all', label: 'All Lists' },
 		{ id: 'doi', label: '2022 DOI' },
 		{ id: 'doe', label: 'DOE' },
-		{ id: 'dla', label: 'DLA' }
+		{ id: 'dla', label: 'DLA' },
+    { id: 'nir', label: 'Import Reliance (2024)' } 
+
 	];
 
 	function changeFilter(id) {
@@ -117,6 +118,30 @@
 		color: black;
 		outline: 3px solid #bc8fa1;
 	}
+
+  /* --------------- Import Reliance Button --------------- */
+	.nir {
+		background-color: #074e67;
+		color: #fff;
+	}
+	.nir:focus {
+		outline: 3px solid #074e67;
+		outline-offset: 3px;
+	}
+
+	.nir:hover,
+	.nir.selected:hover {
+		background-color: #2e8da5;
+		transition: background-color 0.3s ease;
+		color: #fff;
+	}
+
+	.nir.selected {
+		background-color: white;
+		color: black;
+		outline: 3px solid #2e8da5;
+	}
+
 
 	/* -------------------- "All" button -------------------- */
 	.all {

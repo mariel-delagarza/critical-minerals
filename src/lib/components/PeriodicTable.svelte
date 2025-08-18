@@ -5,11 +5,13 @@
 	import { onMount, onDestroy } from 'svelte';
 
 	export let dataArray;
+  export let rareEarthNames;
 	export let wrapperHeight = 0;
 	let activeFilter = 'all';
 	let wrapperEl;
 	let ro;
 
+  console.log(rareEarthNames)
 	function setFilter(filter) {
 		activeFilter = filter;
 		console.log('New filter selected:', activeFilter);
@@ -23,6 +25,28 @@
 		return false;
 	}
 
+	const toNum = (v) => (v == null || v === '' ? null : +`${v}`.replace('%', ''));
+
+	function binFor(pct) {
+		if (pct === null) return 'bNA';
+		if (pct === 100) return 'b100';
+		if (pct <= 25) return 'b0_25';
+		if (pct > 75) return 'b76_99';
+		return 'b26_75';
+	}
+
+	// Return DISTINCT bins present for this element across materials (2024)
+	function nirBinsForElement(el) {
+		const bins = new Set(
+			Object.values(el?.materials ?? {})
+				.map((m) => toNum(m?.['2024']?.value))
+				.filter((v) => Number.isFinite(v))
+				.map(binFor)
+		);
+		// If truly no 2024 values:
+		if (!bins.size) bins.add('bNA');
+		return Array.from(bins); // e.g. ['b26_75'] or ['b26_75','b76_99']
+	}
 	onMount(() => {
 		const update = () => (wrapperHeight = wrapperEl?.clientHeight ?? 0);
 		update(); // initial
@@ -40,15 +64,21 @@
 				element['2022_doi_list'] ||
 				element.doe_critical_mineral ||
 				element.dla_materials_of_interest}
-
+			<!-- get all bins for this element -->
+			{@const nirBins = nirBinsForElement(element)}
+			<!-- DEBUG: log bins -->
+			{@html (() => {
+				// console.log(element.symbol || element.name, nirBins);
+				return '';
+			})()}
 			<button
-				class="cell"
+				class="cell {activeFilter === 'nir' ? `nir ${nirBins.join(' ')}` : ''}"
 				style="grid-column: {element.xpos}; grid-row: {element.ypos};"
 				on:click={() => selectedElement.set(element)}
 				aria-label={isOnList ? `Select ${element.name}` : `${element.name} (not selectable)`}
 				disabled={!isOnList}
 			>
-				<Element {element} {activeFilter} highlight={shouldHighlight(element)} />
+				<Element {element} {activeFilter} highlight={shouldHighlight(element)} {nirBins} />
 			</button>
 		{/each}
 	</div>
@@ -66,9 +96,9 @@
 		display: block;
 	}
 
-  .cell:disabled {
-    color: #808080;
-  }
+	.cell:disabled {
+		color: #808080;
+	}
 	.cell:focus-visible {
 		outline: 2px solid #333;
 	}
