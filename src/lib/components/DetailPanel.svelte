@@ -35,7 +35,7 @@
 <div class="detail-panel">
 	{#if $selectedElement}
 		<h2>{name}</h2>
-		<p>{name} is on the critical minerals {listStatement}. {text}</p>
+		<p>{name} is on the critical minerals {listStatement}. {@html text}</p>
 
 		<h3>Uses</h3>
 		{#each Object.entries($selectedElement.materials) as [materialName, materialData]}
