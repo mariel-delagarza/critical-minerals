@@ -5,6 +5,7 @@ const sheetUrl =
 
 const COUNTRY_KEYS = [
 	'Australia',
+  'Argentina',
 	'Austria',
 	'Bahrain',
 	'Belgium',
