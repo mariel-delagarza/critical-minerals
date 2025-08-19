@@ -5,7 +5,7 @@ const sheetUrl =
 
 const COUNTRY_KEYS = [
 	'Australia',
-  'Argentina',
+	'Argentina',
 	'Austria',
 	'Bahrain',
 	'Belgium',
@@ -49,7 +49,7 @@ const COUNTRY_KEYS = [
 
 export async function getData() {
 	const data = await d3.csv(sheetUrl);
-  console.log(data);
+	console.log(data);
 
 	const structured = data.map((row) => {
 		const isTrue = (val) => val?.toUpperCase() === 'TRUE';
@@ -74,7 +74,7 @@ export async function getData() {
 
 		// Loop over all possible material columns
 		for (let i = 1; i <= 5; i++) {
-			const labelCol = row[`net_import_reliance_percentage_of_${i}_label`];
+			const labelCol = row[`applications_label_${i}`];
 			if (!labelCol) continue; // skip if no label in this slot
 
 			let materialName = labelCol.trim();
@@ -92,7 +92,7 @@ export async function getData() {
 			materials[materialName]['applications'] = row[`applications_${i}`];
 			materials[materialName][`importNumbersFor`] = row[`import_numbers_for_${i}`];
 			materials[materialName][`primaryImportSource`] = row[`primary_import_source_${i}`];
-      materials[materialName]['applications'] = row[`applications_${i}`]
+			materials[materialName]['applications'] = row[`applications_${i}`];
 
 			// Build imports object for this material from country columns
 			const imports = {};
@@ -102,12 +102,12 @@ export async function getData() {
 
 				// split and pick the value for this material (i is 1-based)
 				const parts = raw.split(';').map((s) => s.trim());
-				const valStr = parts[i - 1]; 
+				const valStr = parts[i - 1];
 				if (valStr == null || valStr === '') return;
 
 				const num = Number(valStr);
 				if (!Number.isNaN(num)) {
-					imports[country] = num; // store the % 
+					imports[country] = num; // store the %
 				}
 			});
 
@@ -121,7 +121,7 @@ export async function getData() {
 		const element = {
 			atomic_number: +row.atomic_number,
 			symbol: row.symbol,
-			name: row.name, 
+			name: row.name,
 			xpos: +row.xpos,
 			ypos: +row.ypos,
 			series: row.series,
@@ -131,9 +131,9 @@ export async function getData() {
 			dla_materials_of_interest: isTrue(row.dla_materials_of_interest),
 			notes: row.notes || null,
 			materials, // dynamic object of all materials + years
-      net_import_reliance_percentage_of: row.net_import_reliance_percentage_of_1,
-      import_notes: row.import_notes,
-      reliance_notes: row.reliance_notes
+			net_import_reliance_percentage_of: row.net_import_reliance_percentage_of_1,
+			import_notes: row.import_notes,
+			reliance_notes: row.reliance_notes
 		};
 
 		return element;
