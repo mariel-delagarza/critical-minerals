@@ -31,7 +31,7 @@
 
 <div class="bars">
 	<h3>Countries imported from</h3>
-	{importNotes}
+	<p class="importNotes">{@html importNotes}</p>
 	{#each rows as r (r.country)}
 		<div class="bar-row" transition:fade={{ duration: 180 }} animate:flip>
 			<span class="label">{r.country}</span>
@@ -73,4 +73,8 @@
 		background: #5a175d;
 		transition: width 500ms ease;
 	}
+
+  .importNotes {
+    font-size: 1rem;
+  }
 </style>
