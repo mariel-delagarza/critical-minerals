@@ -51,7 +51,7 @@
 			{/if}
 		{/each}
 
-		<AllValuesChart mode="all" elements={allElements.data} {selectedSymbol} />
+		<AllValuesChart mode="all" elements={allElements.data} selectedElement={$selectedElement} {selectedSymbol} />
 		<div id="charts">
 			<ImportRelianceChart element={$selectedElement} />
 		</div>
