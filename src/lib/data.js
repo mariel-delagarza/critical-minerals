@@ -49,6 +49,7 @@ const COUNTRY_KEYS = [
 
 export async function getData() {
 	const data = await d3.csv(sheetUrl);
+  console.log(data);
 
 	const structured = data.map((row) => {
 		const isTrue = (val) => val?.toUpperCase() === 'TRUE';
