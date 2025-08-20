@@ -52,6 +52,12 @@
 		return Object.values(el?.materials ?? {}).some((m) => m?.['2024']?.netExporter === true);
 	}
 
+	// ✅ Sort for keyboard tab order (row-major: y then x). Visual positions stay via grid-row/column.
+	$: dataArraySorted = (dataArray ?? []).slice().sort((a, b) => {
+		if (a.ypos !== b.ypos) return a.ypos - b.ypos;
+		return a.xpos - b.xpos;
+	});
+
 	onMount(() => {
 		const update = () => (wrapperHeight = wrapperEl?.clientHeight ?? 0);
 		update(); // initial
@@ -63,6 +69,7 @@
 
 <div class="table-wrapper periodic-table" bind:this={wrapperEl}>
 	<TableButtons {activeFilter} on:filterChange={(e) => setFilter(e.detail.id)} />
+
 	{#if activeFilter === 'nir'}
 		<div class="nir-legend">
 			<strong>Net Import Reliance (2024):</strong>
@@ -78,19 +85,23 @@
 	{/if}
 
 	<div class="periodic-grid">
-		{#each dataArray as element}
+		{#each dataArraySorted as element}
 			{@const isOnList =
 				element['2022_doi_list'] ||
 				element.doe_critical_mineral ||
 				element.dla_materials_of_interest}
+
 			<!-- get all bins for this element -->
 			{@const nirBins = isNetExporter(element) ? ['bNEG'] : nirBinsForElement(element)}
-			<!-- DEBUG: log bins -->
+
+			<!-- DEBUG: log bins (kept as no-op) -->
 			{@html (() => {
 				// console.log(element.symbol || element.name, nirBins);
 				return '';
 			})()}
+
 			<button
+				type="button"
 				class="cell {activeFilter === 'nir' ? `nir ${nirBins.join(' ')}` : ''}"
 				style="grid-column: {element.xpos}; grid-row: {element.ypos};"
 				on:click={() => selectedElement.set(element)}
@@ -118,14 +129,18 @@
 	.cell:disabled {
 		color: #808080;
 	}
+
 	.cell:focus-visible {
-		outline: 2px solid #333;
+		outline: 3px solid #0ea5e9; /* tweak to your palette */
+		outline-offset: 2px;
 	}
+
 	.table-wrapper {
 		outline: 1px solid green;
 		container-type: inline-size;
 		container-name: table;
 	}
+
 	.periodic-grid {
 		display: grid;
 		--cell: 3.75rem;
@@ -170,26 +185,12 @@
 		vertical-align: middle;
 	}
 
-	.nir-legend .b0_25 {
-		background: #b2dfee;
-	}
-	.nir-legend .b26_75 {
-		background: #6fbfd5;
-	}
-	.nir-legend .b76_99 {
-		background: #2e8da5;
-	}
-	.nir-legend .b100 {
-		background: #074e67;
-	}
-	.nir-legend .bNA {
-		background: #fff;
-		border: 1px solid #ccc;
-	}
-
-	.nir-legend .bNEG {
-		background: #ccc; /* Or your preferred neutral gray */
-	}
+	.nir-legend .b0_25 { background: #b2dfee; }
+	.nir-legend .b26_75 { background: #6fbfd5; }
+	.nir-legend .b76_99 { background: #2e8da5; }
+	.nir-legend .b100  { background: #074e67; }
+	.nir-legend .bNA   { background: #fff; border: 1px solid #ccc; }
+	.nir-legend .bNEG  { background: #ccc; }
 
 	.bNEG {
 		background-color: #888 !important;
@@ -198,24 +199,17 @@
 
 	/* Container queries: adjust tile size as the table column gets narrower */
 	@container table (max-width: 1400px) {
-		.periodic-grid {
-			--cell: 3.25rem;
-		} /* ~52px */
+		.periodic-grid { --cell: 3.25rem; } /* ~52px */
 	}
 	@container table (max-width: 1200px) {
-		.periodic-grid {
-			--cell: 3rem;
-		} /* 48px */
+		.periodic-grid { --cell: 3rem; } /* 48px */
 	}
 	@container table (max-width: 1050px) {
-		.periodic-grid {
-			--cell: 2.75rem;
-		} /* 44px (AA floor) */
+		.periodic-grid { --cell: 2.75rem; } /* 44px (AA floor) */
 	}
+
 	@container table (max-width: 980px) {
-		.table-wrapper {
-			overflow-x: auto;
-		}
+		.table-wrapper { overflow-x: auto; }
 		.periodic-grid {
 			width: max-content;
 			min-width: 100%;
@@ -223,9 +217,7 @@
 	}
 
 	@media (max-width: 1100px) {
-		.table-wrapper {
-			overflow-x: auto;
-		}
+		.table-wrapper { overflow-x: auto; }
 		.periodic-grid {
 			width: max-content;
 			min-width: 100%;
@@ -237,9 +229,6 @@
 			overflow-x: auto;
 			max-width: 100%;
 		}
-
-		.periodic-grid {
-			width: max-content;
-		}
+		.periodic-grid { width: max-content; }
 	}
 </style>
