@@ -1,7 +1,6 @@
 <header class="header">
 	<div class="header__title">
 		<h1>Critical Minerals: An Overview</h1>
-		<p class="subtitle">I'm a subtitle</p>
 	</div>
 </header>
 

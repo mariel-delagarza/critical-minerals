@@ -11,6 +11,13 @@
 	// Drive highlight from parent (e.g., table click)
 	export let selectedSymbol = null; // e.g., "Li" — set to null to clear
 
+	export let selectedElement;
+	let relianceNotes = ''; // Every time selectedElement changes, update relianceNotes
+	$: if (selectedElement) {
+		console.log('Selected element updated in AllValuesChart:', selectedElement);
+		relianceNotes = selectedElement.reliance_notes || '';
+	}
+
 	// INTERNAL
 	let wrapperEl, containerEl, chart, ro;
 	let years = masterYears.map(String);
@@ -228,31 +235,6 @@
 					states: { inactive: { opacity: 0.3 }, hover: { enabled: false } }
 				}
 			},
-			// tooltip: {
-			// 	useHTML: true,
-			// 	formatter() {
-			// 		const hoveredYear = this.point?.year;
-			// 		const series = this.series;
-			// 		const data = series?.data ?? [];
-			// 		const color = series.color || '#000';
-
-			// 		let output = `<strong style="margin-bottom: 16px; font-size:20px;">${series.name}</strong><br/>`;
-			// 		for (const point of data) {
-			// 			if (point.y != null) {
-			// 				const line = `${point.year}: ${point.y}%`;
-			// 				if (point.year === hoveredYear) {
-			// 					output += `<span style="color: ${color}; font-weight: bold; font-size: 20px;">${line}</span><br/>`;
-			// 				} else {
-			// 					output += `${line}<br/>`;
-			// 				}
-			// 			}
-			// 		}
-			// 		return output;
-			// 	},
-			// 	style: {
-			// 		fontSize: '16px'
-			// 	}
-			// },
 			tooltip: {
 				useHTML: true,
 				formatter() {
@@ -308,6 +290,9 @@
 
 <section class="allvals-root" bind:this={wrapperEl}>
 	<h3>Net Import Reliance, 2020 - 2024</h3>
+	{#if relianceNotes}
+		<p class="reliance-notes">{@html relianceNotes}</p>
+	{/if}
 	<figure class="allvals-figure">
 		<div class="allvals-chart" bind:this={containerEl}></div>
 	</figure>
