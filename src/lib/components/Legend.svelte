@@ -142,6 +142,15 @@ There's also a quasi-official list published by the Department of Defense's Defe
 		margin: 5rem auto;
 	}
 
+  .footnote a {
+    color: #6e1e43;
+  }
+
+  .footnote a:hover {
+    color: #bc8fa1;
+    transition: color 0.3s ease-in-out; 
+  }
+
 	.italic-bold {
 		font-weight: bold;
 		font-style: italic;
