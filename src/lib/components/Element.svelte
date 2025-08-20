@@ -10,6 +10,11 @@
 	let bins;
 
 	$: listCount = [isDOI, isDOE, isDLA].filter(Boolean).length;
+	// Elements on exactly two lists that need a white atomic number
+	const FORCE_WHITE_NUMBER_BY_SYMBOL = new Set(['Si', 'Cu']);
+
+	// true only when the element is on two lists AND is Si or Cu
+	$: forceWhiteNumber = listCount === 2 && FORCE_WHITE_NUMBER_BY_SYMBOL.has(element.symbol);
 
 	// bin logic — pick a bin class or default
 	$: {
@@ -105,7 +110,9 @@
 </script>
 
 <div class={classes} style={nirStyle}>
-	<div class="number" style={lightText ? 'color:#fff' : ''}>{element.atomic_number}</div>
+	<div class="number" style={lightText || forceWhiteNumber ? 'color:#fff' : ''}>
+		{element.atomic_number}
+	</div>
 	<div class="symbol" style={lightText ? 'color:#fff' : ''}>{element.symbol}</div>
 </div>
 
