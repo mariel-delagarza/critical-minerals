@@ -7,24 +7,23 @@
 		<div class="footer__main">
 			<div class="footer__about">
 				<p>
-					Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-					ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-					ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-					reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur
-					sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
-					est laborum.
+					Built with ❤️ by Mariel, a web developer who loves data, dev, and interactive learning.
 				</p>
 			</div>
 
 			<div class="footer__address">
-				<p>1234 State Name Avenue, NW<br />Washington, DC 23456<br />(202) 555-5555</p>
+				<p>Connect with me:</p>
+				<ul class="footer__links">
+					<li><a href="https://github.com/mariel-delagarza">GitHub</a></li>
+					<li><a href="https://bsky.app/profile/mariel.bsky.social">BlueSky</a></li>
+					<li><a href="mailto:mariel.code@gmail.com">Email</a></li>
+				</ul>
 			</div>
 		</div>
 
 		<div class="footer__copyright">
 			<p>
-				Copyright © 2025 Logoipsum. All rights reserved.
-				<a href="www.google.com">Privacy Policy</a>
+				© 2025 Mariel de la Garza. All rights reserved.
 			</p>
 		</div>
 	</div>
@@ -38,11 +37,6 @@
 		font-size: 0.95rem;
 	}
 
-	/* .footer__logo img {
-		max-width: 180px;
-		margin-bottom: 1.5rem;
-	} */
-
 	.footer__main {
 		display: flex;
 		justify-content: space-between;
@@ -53,6 +47,7 @@
 
 	.footer__about {
 		flex: 1 1 60%;
+		color: #ccc;
 	}
 
 	.footer__address {
@@ -67,5 +62,23 @@
 	.footer__copyright a {
 		color: #fff;
 		text-decoration: underline;
+	}
+
+	.footer__links {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		display: flex;
+		gap: 1rem;
+	}
+
+	.footer__links a {
+		color: #fff;
+		text-decoration: none;
+		transition: color 0.2s ease;
+	}
+
+	.footer__links a:hover {
+		color: #ffdd57;
 	}
 </style>
