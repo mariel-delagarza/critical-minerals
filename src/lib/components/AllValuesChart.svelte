@@ -57,7 +57,7 @@
 		const localYears = [...yearSet].sort((a, b) => a - b).map(String);
 
 		// ✅ choose the series label
-		const displayName = el?.rare_earth ? 'Rare-Earths' : (el.name ?? el.symbol);
+		// const displayName = el?.rare_earth ? 'Rare-Earths' : (el.name ?? el.symbol);
 
 		const series = Object.entries(el.materials).map(([matName, yearObj]) => {
 			const data = localYears.map((yr) => {
@@ -65,6 +65,8 @@
 				const y = toNum(rec?.value);
 				return y == null ? { y: null, year: +yr, ...rec } : { y, year: +yr, ...rec };
 			});
+
+              const displayName = el?.rare_earth ? 'Rare-Earths' : matName;
 
 			return {
 				name: displayName, // <-- “Rare-Earths” when rare_earth:true
