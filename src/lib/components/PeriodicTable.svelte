@@ -5,19 +5,22 @@
 	import { onMount, onDestroy } from 'svelte';
 
 	export let dataArray;
-	export let rareEarthNames;
 	export let wrapperHeight = 0;
-	let activeFilter = 'all';
-	let wrapperEl;
-	let ro;
 
-	console.log(rareEarthNames);
+	let activeFilter = 'all';
+	let selectedCountry = ''; // ← country from the dropdown
+	let wrapperEl, ro;
+
+	// normalize for safe comparisons
+	const norm = (s) => (s == null ? '' : String(s).replace(/\s+/g, ' ').trim());
+
 	function setFilter(filter) {
 		activeFilter = filter;
-		console.log('New filter selected:', activeFilter);
 	}
 
 	function shouldHighlight(element) {
+		// We dim/outline via classes; highlight stays true unless list filters say otherwise
+		if (selectedCountry) return true;
 		if (activeFilter === 'all') return true;
 		if (activeFilter === 'doi') return element['2022_doi_list'];
 		if (activeFilter === 'doe') return element.doe_critical_mineral;
@@ -35,7 +38,6 @@
 		return 'b26_75';
 	}
 
-	// Return DISTINCT bins present for this element across materials (2024)
 	function nirBinsForElement(el) {
 		const bins = new Set(
 			Object.values(el?.materials ?? {})
@@ -43,7 +45,7 @@
 				.filter((v) => Number.isFinite(v))
 				.map(binFor)
 		);
-		return Array.from(bins); // no fallback here
+		return Array.from(bins);
 	}
 
 	function isNetExporter(el) {
@@ -52,14 +54,21 @@
 
 	function isNotAvailable(el) {
 		const mats = Object.values(el?.materials ?? {});
-		// Do NOT treat "no materials" as Not Available — that's your existing bNA case.
-		if (!mats.length) return false;
-
-		// Return true only if EVERY material’s 2024 value is null/undefined
+		if (!mats.length) return false; // your old bNA case is separate
 		return mats.every((m) => m?.['2024']?.value == null);
 	}
 
-	// ✅ Sort for keyboard tab order (row-major: y then x). Visual positions stay via grid-row/column.
+	function matchesCountry(el) {
+		if (!selectedCountry) return true;
+		return norm(el?.primary_import_source_1) === norm(selectedCountry);
+	}
+
+	// Build the dropdown list from your data (you said you already do this; keeping here for completeness)
+	$: importCountries = new Set(
+		(dataArray ?? []).map((el) => norm(el?.primary_import_source_1)).filter(Boolean)
+	);
+
+	// Row-major sort so Tab follows the grid
 	$: dataArraySorted = (dataArray ?? []).slice().sort((a, b) => {
 		if (a.ypos !== b.ypos) return a.ypos - b.ypos;
 		return a.xpos - b.xpos;
@@ -67,7 +76,7 @@
 
 	onMount(() => {
 		const update = () => (wrapperHeight = wrapperEl?.clientHeight ?? 0);
-		update(); // initial
+		update();
 		ro = new ResizeObserver(update);
 		ro.observe(wrapperEl);
 	});
@@ -75,7 +84,16 @@
 </script>
 
 <div class="table-wrapper periodic-table" bind:this={wrapperEl}>
-	<TableButtons {activeFilter} on:filterChange={(e) => setFilter(e.detail.id)} />
+	<TableButtons
+		{activeFilter}
+		{importCountries}
+		{selectedCountry}
+    on:filterChange={(e) => setFilter(e.detail.id)}
+		on:countryChange={(e) => {
+			// dropdown selection
+			selectedCountry = e.detail.country || '';
+		}}
+	/>
 
 	{#if activeFilter === 'nir'}
 		<div class="nir-legend">
@@ -93,33 +111,43 @@
 
 	<div class="periodic-grid">
 		{#each dataArraySorted as element}
-			{@const isOnList =
-				element['2022_doi_list'] ||
-				element.doe_critical_mineral ||
-				element.dla_materials_of_interest}
+			{@const onDOI = !!element['2022_doi_list']}
+			{@const onDOE = !!element.doe_critical_mineral}
+			{@const onDLA = !!element.dla_materials_of_interest}
+			{@const onAny = onDOI || onDOE || onDLA}
 
-			<!-- get all bins for this element -->
+			<!-- Enable only when the element matches the CURRENT list filter -->
+			{@const enabled =
+				activeFilter === 'doi'
+					? onDOI
+					: activeFilter === 'doe'
+						? onDOE
+						: activeFilter === 'dla'
+							? onDLA
+							: activeFilter === 'nir'
+								? onAny /* in NIR, use the "in scope" set */
+								: /* 'all' or default */ onAny}
+
+			<!-- NIR bins are independent of the DOE/DOI/DLA view -->
 			{@const nirBins = isNetExporter(element)
 				? ['bNEG']
-				: isOnList && isNotAvailable(element)
+				: onAny && isNotAvailable(element)
 					? ['bNotAv']
-					: isOnList
+					: onAny
 						? nirBinsForElement(element)
 						: ['bNA']}
 
-			<!-- DEBUG: log bins (kept as no-op) -->
-			{@html (() => {
-				// console.log(element.symbol || element.name, nirBins);
-				return '';
-			})()}
-
 			<button
 				type="button"
-				class="cell {activeFilter === 'nir' ? `nir ${nirBins.join(' ')}` : ''}"
-				style="grid-column: {element.xpos}; grid-row: {element.ypos};"
-				on:click={() => selectedElement.set(element)}
-				aria-label={isOnList ? `Select ${element.name}` : `${element.name} (not selectable)`}
-				disabled={!isOnList}
+				class="cell
+               {activeFilter === 'nir' ? `nir ${nirBins.join(' ')}` : ''}
+               {!enabled ? 'is-disabled' : ''}
+               {selectedCountry && enabled && !matchesCountry(element) ? 'is-dim' : ''}
+               {selectedCountry && enabled && matchesCountry(element) ? 'is-match' : ''}"
+				style="grid-column:{element.xpos}; grid-row:{element.ypos};"
+				on:click={() => enabled && selectedElement.set(element)}
+				aria-label={enabled ? `Select ${element.name}` : `${element.name} (not selectable)`}
+				disabled={!enabled}
 			>
 				<Element {element} {activeFilter} highlight={shouldHighlight(element)} {nirBins} />
 			</button>
@@ -128,7 +156,6 @@
 </div>
 
 <style>
-	/* Make cells keyboard-accessible without messing styles */
 	.cell {
 		padding: 0;
 		border: 0;
@@ -138,14 +165,22 @@
 		height: 100%;
 		display: block;
 	}
-
 	.cell:disabled {
 		color: #808080;
 	}
 
 	.cell:focus-visible {
-		outline: 3px solid #0ea5e9; /* tweak to your palette */
+		outline: 3px solid #0ea5e9;
 		outline-offset: 2px;
+	}
+
+	/* Country highlighting */
+	.cell.is-dim {
+		opacity: 0.25;
+	}
+	.cell.is-match {
+		outline: 3px solid #2e8da5;
+		outline-offset: -2px;
 	}
 
 	.table-wrapper {
@@ -177,7 +212,6 @@
 		line-height: 1.4;
 		width: fit-content;
 	}
-
 	.nir-legend ul {
 		display: flex;
 		gap: 1rem;
@@ -187,7 +221,6 @@
 		flex-wrap: wrap;
 		align-items: center;
 	}
-
 	.nir-legend .swatch {
 		display: inline-block;
 		width: 1rem;
@@ -197,7 +230,6 @@
 		box-shadow: 0 0 1px rgba(0, 0, 0, 0.3);
 		vertical-align: middle;
 	}
-
 	.nir-legend .b0_25 {
 		background: #b2dfee;
 	}
@@ -210,36 +242,28 @@
 	.nir-legend .b100 {
 		background: #074e67;
 	}
-
 	.nir-legend .bNotAv {
-		background: #ccc; /* light gray */
-		border: 1px solid #d1d5db; /* optional hairline */
+		background: #ccc;
+		border: 1px solid #d1d5db;
 	}
-
 	.nir-legend .bNEG {
 		background: #ccc;
 	}
 
-	.bNEG {
-		background-color: #888 !important;
-		color: #000;
-	}
-
-	/* Container queries: adjust tile size as the table column gets narrower */
 	@container table (max-width: 1400px) {
 		.periodic-grid {
 			--cell: 3.25rem;
-		} /* ~52px */
+		}
 	}
 	@container table (max-width: 1200px) {
 		.periodic-grid {
 			--cell: 3rem;
-		} /* 48px */
+		}
 	}
 	@container table (max-width: 1050px) {
 		.periodic-grid {
 			--cell: 2.75rem;
-		} /* 44px (AA floor) */
+		}
 	}
 
 	@container table (max-width: 980px) {
@@ -251,7 +275,6 @@
 			min-width: 100%;
 		}
 	}
-
 	@media (max-width: 1100px) {
 		.table-wrapper {
 			overflow-x: auto;
@@ -261,7 +284,6 @@
 			min-width: 100%;
 		}
 	}
-
 	@media (max-width: 700px) {
 		.table-wrapper {
 			overflow-x: auto;
