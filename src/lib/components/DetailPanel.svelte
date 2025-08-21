@@ -80,4 +80,11 @@
   .summaryDetails {
     font-size: 1.125rem;
   }
+
+  @media (max-width: 700px) {
+    .detail-panel {
+      padding: 0;
+      min-width: 358px;
+    }
+  }
 </style>

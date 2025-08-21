@@ -184,7 +184,7 @@
 	}
 
 	.table-wrapper {
-		outline: 2px dashed purple;
+		/* outline: 2px dashed purple; */
 		container-type: inline-size;
 		container-name: table;
 	}
@@ -197,7 +197,7 @@
 		grid-template-rows: repeat(10, auto);
 		gap: 0.25rem;
 		padding: 1rem;
-		outline: 2px dashed purple;
+		/* outline: 2px dashed purple; */
 		width: 100%;
 	}
 

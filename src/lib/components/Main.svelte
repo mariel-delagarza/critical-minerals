@@ -79,7 +79,7 @@
   	:global(.detail-panel) {
 		flex: 2 1 0;
 		min-width: 400px;
-		outline: 2px dashed purple;
+		/* outline: 2px dashed purple; */
 		height: var(--row-h);
 		overflow-y: auto;
 	}
