@@ -95,7 +95,7 @@
 		}}
 	/>
 
-	{#if activeFilter === 'nir' && !selectedCountry}
+	{#if activeFilter === 'nir'}
 		<div class="nir-legend">
 			<strong>Net Import Reliance (2024):</strong>
 			<ul>
