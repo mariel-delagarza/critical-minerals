@@ -59,11 +59,6 @@
 		color: #aaa;
 	}
 
-	.footer__copyright a {
-		color: #fff;
-		text-decoration: underline;
-	}
-
 	.footer__links {
 		list-style: none;
 		padding: 0;
