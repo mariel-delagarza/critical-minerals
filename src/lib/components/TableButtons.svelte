@@ -51,7 +51,7 @@
 			value={selectedCountry}
 			aria-label="Filter by country"
 		>
-			<option value="">Filter by country…</option>
+			<option value="">Filter by primary import source...</option>
 			{#each countries as country}
 				<option value={country}>{country}</option>
 			{/each}
