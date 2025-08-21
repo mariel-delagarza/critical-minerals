@@ -87,4 +87,10 @@
       min-width: 358px;
     }
   }
+
+  @media (max-width: 1000px) {
+    .detail-panel {
+      max-width: 95%;
+    }
+  }
 </style>
