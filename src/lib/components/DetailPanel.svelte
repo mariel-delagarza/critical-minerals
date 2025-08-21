@@ -41,8 +41,8 @@
 		{#each Object.entries($selectedElement.materials) as [materialName, materialData]}
 			{#if materialData.applications}
 				<details>
-					<summary>{materialName}</summary>
-					<ul>
+					<summary class="summaryName">{materialName}</summary>
+					<ul class="summaryDetails">
 						{#each materialData.applications.split(';').map((a) => a.trim()) as app}
 							<li>{app}</li>
 						{/each}
@@ -71,5 +71,13 @@
 
 	p {
     font-size: 1.25rem;
+  }
+
+  .summaryName {
+    font-size: 1.125rem;
+  }
+
+  .summaryDetails {
+    font-size: 1.125rem;
   }
 </style>
