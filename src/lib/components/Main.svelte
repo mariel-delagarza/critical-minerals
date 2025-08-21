@@ -72,7 +72,7 @@
 	:global(.periodic-table) {
 		flex: 3 1 0;
 		min-width: 0;
-		outline: 2px dashed red;
+		/* outline: 2px dashed red; */
 		min-height: 0;
 		overflow-x: auto;
 	}
@@ -90,7 +90,7 @@
 
 	:global(.legend) {
 		margin-left: auto;
-		outline: 2px dashed red;
+		/* outline: 2px dashed red; */
 	}
 
 	/* ------------------------------------------------------ */
@@ -115,7 +115,7 @@
 
 		:global(.filters) {
 			display: block;
-			outline: 2px dashed red;
+			/* outline: 2px dashed red; */
 		}
 
 		:global(.periodic-table),

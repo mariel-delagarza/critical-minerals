@@ -134,7 +134,7 @@ There's also a quasi-official list published by the Department of Defense's Defe
 		font-family: 'Source Serif 4', serif;
 		font-size: 1.25rem;
 		font-weight: 400;
-		outline: 1px solid red;
+		/* outline: 1px solid red; */
 		max-width: 50%;
 		width: 100%;
 		color: #333;
