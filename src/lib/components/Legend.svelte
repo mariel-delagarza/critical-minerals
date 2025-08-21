@@ -15,20 +15,20 @@
 	<h2>Legal Definitions</h2>
 	<p>
 		U.S. law<sup class="footnote"><a href="#footnote2">2</a></sup> defines critical minerals as those
-		that the Secretary of the Interior determines to meet three criteria:
+		that the Secretary of the Interior determines:
 	</p>
 	<ol>
-		<li>They are essential to the economic or national security of the United States;</li>
+		<li>are essential to the economic or national security of the United States;</li>
 		<li>
-			Their supply chain is vulnerable to disruption. These disruptions can include foreign
-			political risk, abrupt demand growth, military conflict, violent unrest, anti-competitive or
-			protectionist behaviors, and other risks throughout the supply chain.
+			the supply chain of which is vulnerable to disruption (including restrictions associated with
+			foreign political risk, abrupt demand growth, military conflict, violent unrest,
+			anti-competitive or protectionist behaviors, and other risks throughout the supply chain); and
 		</li>
 		<li>
-			And, they serve an essential function in the manufacturing of a product that, should we go
-			without it, would have significant consequences for the economic or national security of the
-			United States. These products can include those in energy technology, defense, currency,
-			agriculture, consumer electronics, and health-care.
+			serve an essential function in the manufacturing of a product (including energy technology-,
+			defense-, currency-, agriculture-, consumer electronics-, and health care-related
+			applications), the absence of which would have significant consequences for the economic or
+			national security of the United States.
 		</li>
 	</ol>
 	<p>
@@ -69,31 +69,29 @@
 	<h2>Lists</h2>
 	<p>
 		There are two official lists of critical minerals, published by the Department of Interior
-		through the U.S. Geological Survey (USGS) and the Department of Energy. These are the
-		result of determinations made according to the definitions above.
-There's also a quasi-official list published by the Department of Defense's Defense Logistics
-		Agency (DLA), called "Materials of Interest."<sup class="footnote"><a href="#foonote6">6</a></sup>
+		through the U.S. Geological Survey (USGS) and the Department of Energy. These are the result of
+		determinations made according to the definitions above. There's also a quasi-official list
+		published by the Department of DOD's Defense Logistics Agency (DLA), called "Materials of
+		Interest."<sup class="footnote"><a href="#foonote6">6</a></sup>
 	</p>
 	<p>
-		In 2022, USGS released its List of Critical
-		Minerals "based on directives from the Energy Act of 2020."<sup class="footnote"
-			><a href="#footnote4">7</a></sup
+		In 2022, USGS released its List of Critical Minerals "based on directives from the Energy Act of
+		2020."<sup class="footnote"><a href="#footnote4">7</a></sup>
+		In 2023, DOE followed with its own list. It includes minerals that are specifically important to
+		energy applications, "as well as those on critical minerals on the [USGS] 2022 final list".<sup
+			class="footnote"><a href="#footnote5">8</a></sup
 		>
-		In 2023, DOE followed with its own list. It includes minerals that are specifically
-		important to energy applications, "as well as those on critical minerals on the [USGS] 2022 final list".<sup class="footnote"><a href="#footnote5">8</a></sup>
 	</p>
 	<p>
-		The DLA Strategic Materials office is the part of DOD that “is
-		responsible for providing safe, secure, and environmentally sound stewardship for strategic and
-		critical materials in the United States National Defense Stockpile (NDS).”<sup class="footnote"
-			><a href="#footnote9">9</a></sup
-		>
+		The DLA Strategic Materials office is the part of DOD that “is responsible for providing safe,
+		secure, and environmentally sound stewardship for strategic and critical materials in the United
+		States National Defense Stockpile (NDS).”<sup class="footnote"><a href="#footnote9">9</a></sup>
 		It maintains a list of Materials of Interest<sup class="footnote"
-			><a href="#footnote10">10</a></sup> that has many items in common with the lists from the DOI and DOE,
-			in addition to those of special interest to DOD due to their defense applications.
-		
+			><a href="#footnote10">10</a></sup
+		> that has many items in common with the lists from the DOI and DOE, in addition to those of special
+		interest to DOD due to their defense applications.
 	</p>
-  	<p>But what <span class="italic-bold">are</span> they?</p>
+	<p>But what <span class="italic-bold">are</span> they?</p>
 
 	<h2>This Tool</h2>
 	<p>
@@ -112,6 +110,7 @@ There's also a quasi-official list published by the Department of Defense's Defe
 		<li>What countries it's imported from</li>
 		<li>What it's used for</li>
 	</ul>
+  <p>The table has filters for each list, as well as a filter for the net import reliance values from 2024. A dropdown lets you select a country and see which elements are primarily imported from that country.</p>
 	<h2>Conclusion</h2>
 	<p>
 		Critical minerals are a recurring subject of legislation and public discourse due to their
@@ -134,30 +133,29 @@ There's also a quasi-official list published by the Department of Defense's Defe
 		font-family: 'Source Serif 4', serif;
 		font-size: 1.25rem;
 		font-weight: 400;
-		/* outline: 1px solid red; */
 		max-width: 50%;
 		width: 100%;
 		color: #333;
 		margin: 5rem auto;
 	}
 
-  .footnote a {
-    color: #6e1e43;
-  }
+	.footnote a {
+		color: #6e1e43;
+	}
 
-  .footnote a:hover {
-    color: #bc8fa1;
-    transition: color 0.3s ease-in-out; 
-  }
+	.footnote a:hover {
+		color: #bc8fa1;
+		transition: color 0.3s ease-in-out;
+	}
 
 	.italic-bold {
 		font-weight: bold;
 		font-style: italic;
 	}
 
-  h2 {
-    font-family: 'Roboto';
-  }
+	h2 {
+		font-family: 'Roboto';
+	}
 
 	@media (max-width: 1250px) {
 		#legend {

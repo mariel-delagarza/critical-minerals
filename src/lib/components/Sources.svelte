@@ -9,13 +9,13 @@
 			</li>
 			<li id="footnote2">
 				<a
-					href="https://uscode.house.gov/view.xhtml?req=critical+minerals&f=treesort&fq=true&num=37&hl=true&edition=prelim&granuleId=USC-prelim-title30-section1606" target="_blank" rel="noopener noreferrer"
+					href="https://uscode.house.gov/view.xhtml?hl=false&edition=prelim&req=granuleid%3AUSC-prelim-title30-section1606&f=treesort&fq=true&num=0&saved=%7CY3JpdGljYWwgbWluZXJhbHM%3D%7CdHJlZXNvcnQ%3D%7CdHJ1ZQ%3D%3D%7C37%7Ctrue%7Cprelim" target="_blank" rel="noopener noreferrer"
 					>30 U.S.C. § 1606(c)(4)(A)</a
 				>
 			</li>
 			<li id="footnote3">
 				<a
-					href="https://uscode.house.gov/view.xhtml?req=critical+minerals&f=treesort&fq=true&num=37&hl=true&edition=prelim&granuleId=USC-prelim-title30-section1606" target="_blank" rel="noopener noreferrer"
+					href="https://uscode.house.gov/view.xhtml?hl=false&edition=prelim&req=granuleid%3AUSC-prelim-title30-section1606&f=treesort&fq=true&num=0&saved=%7CY3JpdGljYWwgbWluZXJhbHM%3D%7CdHJlZXNvcnQ%3D%7CdHJ1ZQ%3D%3D%7C37%7Ctrue%7Cprelim" target="_blank" rel="noopener noreferrer"
 					>30 U.S.C. § 1606(a)(2)</a
 				>
 			</li>
