@@ -11,6 +11,14 @@
 	let wrapperEl;
 	let ro;
 
+	const importCountries = new Set();
+	for (let i = 0; i < dataArray.length; i++) {
+		if (dataArray[i].primary_import_source_1) {
+			importCountries.add(dataArray[i].primary_import_source_1);
+		}
+	}
+	console.log('importCountries', importCountries);
+
 	console.log(rareEarthNames);
 	function setFilter(filter) {
 		activeFilter = filter;
@@ -75,7 +83,7 @@
 </script>
 
 <div class="table-wrapper periodic-table" bind:this={wrapperEl}>
-	<TableButtons {activeFilter} on:filterChange={(e) => setFilter(e.detail.id)} />
+	<TableButtons {activeFilter} {importCountries} on:filterChange={(e) => setFilter(e.detail.id)} />
 
 	{#if activeFilter === 'nir'}
 		<div class="nir-legend">
