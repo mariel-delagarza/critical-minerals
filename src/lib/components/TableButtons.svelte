@@ -4,6 +4,8 @@
 
 	export let activeFilter = 'all';
 	export let importCountries; // Set<string>
+	export let selectedCountry = ''; // <-- add this
+
 	const filters = [
 		{ id: 'all', label: 'All Lists' },
 		{ id: 'doi', label: '2022 DOI' },
@@ -25,8 +27,7 @@
 		.sort(new Intl.Collator('en').compare);
 
 	function changeCountry(e) {
-		const val = e.target.value || null; // null means "no country filter"
-		dispatch('countryChange', { country: val });
+		dispatch('countryChange', { country: e.target.value || '' });
 	}
 </script>
 
@@ -39,6 +40,7 @@
 	<select
 		id="primaryImportSources"
 		name="primaryImportSources"
+		value={selectedCountry}
 		on:change={changeCountry}
 		class="select"
 	>
