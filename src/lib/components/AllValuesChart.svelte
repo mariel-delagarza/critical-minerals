@@ -318,4 +318,8 @@
 	:global(.highcharts-container) {
 		width: 100% !important;
 	}
+
+  figure {
+    margin: 0;
+  }
 </style>

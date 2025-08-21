@@ -10,7 +10,7 @@
 
 	@media (max-width: 600px) {
 		#filters {
-			outline: 1px solid red;
+			/* outline: 1px solid red; */
 			position: fixed;
 			bottom: 0;
 			left: 0;

@@ -120,7 +120,10 @@
 		font-size: 1rem;
 		margin-bottom: 0.5rem;
 	}
-	.empty {
-		opacity: 0.7;
-	}
+
+  @media (max-width: 700px) {
+    .bars {
+      padding: 0px;
+    }
+  }
 </style>

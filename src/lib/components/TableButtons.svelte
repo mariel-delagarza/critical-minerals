@@ -51,7 +51,7 @@
 			value={selectedCountry}
 			aria-label="Filter by country"
 		>
-			<option value="">Filter by primary import source...</option>
+			<option value="">Primary import source...</option>
 			{#each countries as country}
 				<option value={country}>{country}</option>
 			{/each}
@@ -213,7 +213,7 @@
 		background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 20 20' fill='white'><path d='M5.5 7.5l4.5 4.5 4.5-4.5z'/></svg>");
 		background-repeat: no-repeat;
 		background-position: right 0.9rem center;
-		background-size: 12px;
+		background-size: 25px;
 	}
 	/* when a value is selected (the ✕ shows), remove the caret */
 	.select-wrap.hasValue .select {
