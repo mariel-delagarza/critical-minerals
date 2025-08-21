@@ -78,8 +78,8 @@
 				<li><span class="swatch b26_75"></span> 26–75%</li>
 				<li><span class="swatch b76_99"></span> 76–99%</li>
 				<li><span class="swatch b100"></span> 100%</li>
-				<li><span class="swatch bNA"></span> Data not available</li>
-        <li><span class="swatch bNEG"></span> Net exporter</li>
+				<li><span class="swatch bNEG"></span> Net exporter</li>
+				<li><span class="swatch bNA"></span>Not a critical mineral</li>
 			</ul>
 		</div>
 	{/if}
@@ -185,12 +185,25 @@
 		vertical-align: middle;
 	}
 
-	.nir-legend .b0_25 { background: #b2dfee; }
-	.nir-legend .b26_75 { background: #6fbfd5; }
-	.nir-legend .b76_99 { background: #2e8da5; }
-	.nir-legend .b100  { background: #074e67; }
-	.nir-legend .bNA   { background: #fff; border: 1px solid #ccc; }
-	.nir-legend .bNEG  { background: #ccc; }
+	.nir-legend .b0_25 {
+		background: #b2dfee;
+	}
+	.nir-legend .b26_75 {
+		background: #6fbfd5;
+	}
+	.nir-legend .b76_99 {
+		background: #2e8da5;
+	}
+	.nir-legend .b100 {
+		background: #074e67;
+	}
+	.nir-legend .bNA {
+		background: #fff;
+		border: 1px solid #ccc;
+	}
+	.nir-legend .bNEG {
+		background: #ccc;
+	}
 
 	.bNEG {
 		background-color: #888 !important;
@@ -199,17 +212,25 @@
 
 	/* Container queries: adjust tile size as the table column gets narrower */
 	@container table (max-width: 1400px) {
-		.periodic-grid { --cell: 3.25rem; } /* ~52px */
+		.periodic-grid {
+			--cell: 3.25rem;
+		} /* ~52px */
 	}
 	@container table (max-width: 1200px) {
-		.periodic-grid { --cell: 3rem; } /* 48px */
+		.periodic-grid {
+			--cell: 3rem;
+		} /* 48px */
 	}
 	@container table (max-width: 1050px) {
-		.periodic-grid { --cell: 2.75rem; } /* 44px (AA floor) */
+		.periodic-grid {
+			--cell: 2.75rem;
+		} /* 44px (AA floor) */
 	}
 
 	@container table (max-width: 980px) {
-		.table-wrapper { overflow-x: auto; }
+		.table-wrapper {
+			overflow-x: auto;
+		}
 		.periodic-grid {
 			width: max-content;
 			min-width: 100%;
@@ -217,7 +238,9 @@
 	}
 
 	@media (max-width: 1100px) {
-		.table-wrapper { overflow-x: auto; }
+		.table-wrapper {
+			overflow-x: auto;
+		}
 		.periodic-grid {
 			width: max-content;
 			min-width: 100%;
@@ -229,6 +252,8 @@
 			overflow-x: auto;
 			max-width: 100%;
 		}
-		.periodic-grid { width: max-content; }
+		.periodic-grid {
+			width: max-content;
+		}
 	}
 </style>
