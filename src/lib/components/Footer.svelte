@@ -7,7 +7,7 @@
 		<div class="footer__main">
 			<div class="footer__about">
 				<p>
-					Built with ❤️ by Mariel, a web developer who loves data, dev, and interactive learning.
+					Built with ❤️ by Mariel.
 				</p>
 			</div>
 
