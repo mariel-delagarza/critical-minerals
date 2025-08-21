@@ -15,6 +15,7 @@ const COUNTRY_KEYS = [
   'Chile',
   'China',
   'Czechia',
+  'Estonia',
   'Finland',
   'France',
   'Gabon',
