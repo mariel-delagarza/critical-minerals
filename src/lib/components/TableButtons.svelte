@@ -4,7 +4,7 @@
 
 	export let activeFilter = 'all';
 	export let importCountries; // Set<string>
-	export let selectedCountry = ''; // <-- add this
+	export let selectedCountry = '';
 
 	const filters = [
 		{ id: 'all', label: 'All Lists' },
@@ -20,7 +20,7 @@
 
 	const norm = (s) => (s == null ? '' : String(s).replace(/\s+/g, ' ').trim());
 
-	// ✔ turn the Set into a sorted array of strings
+	// turn the Set into a sorted array of strings
 	$: countries = Array.from(importCountries ?? [])
 		.map(norm)
 		.filter(Boolean)
@@ -28,6 +28,10 @@
 
 	function changeCountry(e) {
 		dispatch('countryChange', { country: e.target.value || '' });
+	}
+
+	function clearCountry() {
+		dispatch('countryChange', { country: '' });
 	}
 </script>
 
@@ -37,18 +41,34 @@
 			{label}
 		</button>
 	{/each}
-	<select
-		id="primaryImportSources"
-		name="primaryImportSources"
-		value={selectedCountry}
-		on:change={changeCountry}
-		class="select"
-	>
-		<option value="">Filter by country…</option>
-		{#each countries as country}
-			<option value={country}>{country}</option>
-		{/each}
-	</select>
+	<!-- Select + clear button wrapper -->
+	<div class="select-wrap">
+		<select
+			id="primaryImportSources"
+			name="primaryImportSources"
+			class="select"
+			on:change={changeCountry}
+			value={selectedCountry}
+			aria-label="Filter by country"
+		>
+			<option value="">Filter by country…</option>
+			{#each countries as country}
+				<option value={country}>{country}</option>
+			{/each}
+		</select>
+
+		{#if selectedCountry}
+			<button
+				type="button"
+				class="clear-select"
+				aria-label="Clear country filter"
+				title="Clear country filter"
+				on:click={clearCountry}
+			>
+				✕
+			</button>
+		{/if}
+	</div>
 </div>
 
 <style>
@@ -168,46 +188,60 @@
 	}
 
 	/* --------------- Primary Import Sources --------------- */
-	/* Reset native styling so our styles apply */
-	#primaryImportSources.select {
-		-webkit-appearance: none;
-		-moz-appearance: none;
-		appearance: none;
+	
+  /* Select wrapper positions the clear button */
+  .select-wrap {
+    position: relative;
+    display: inline-block;
+  }
 
-		background-color: #5a175d;
-		color: #fff;
+  /* Style the closed control (can't style the open OS menu) */
+  .select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
 
-		/* square corners */
-		border-radius: 0;
-		border: 0;
+    background-color: #5a175d;
+    color: #fff;
+    border-radius: 0;
+    border: 0;
 
-		/* sizing */
-		font-size: 1.25rem;
-		font-weight: 700;
-		line-height: 1;
-		padding: 1rem 2.75rem 1rem 2rem; /* extra right padding for custom caret */
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: 1;
+    padding: 1rem 3rem 1rem 2rem; /* room on right for clear button */
+    background-clip: padding-box;
+  }
+  .select:hover { background-color: #9a729c; }
+  .select:focus {
+    outline: 3px solid #9a729c;
+    outline-offset: 3px;
+  }
 
-		/* optional: clip any antialiased rounding artifacts */
-		overflow: hidden;
-		background-clip: padding-box;
-	}
+  /* Optional: custom caret (you already removed native with appearance:none) */
+  .select {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 20 20' fill='white'><path d='M5.5 7.5l4.5 4.5 4.5-4.5z'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 0.9rem center;
+    background-size: 12px;
+  }
 
-	/* custom caret (since we removed the native one) */
-	#primaryImportSources.select {
-		background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 20 20' fill='white'><path d='M5.5 7.5l4.5 4.5 4.5-4.5z'/></svg>");
-		background-repeat: no-repeat;
-		background-position: right 0.9rem center;
-		background-size: 12px;
-	}
-
-	/* hover/focus styles */
-	#primaryImportSources.select:hover {
-		background-color: #9a729c;
-	}
-	#primaryImportSources.select:focus {
-		outline: 3px solid #9a729c; /* match your palette */
-		outline-offset: 3px;
-	}
+  /* The clear button */
+  .clear-select {
+    position: absolute;
+    right: .5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    line-height: 1;
+    border: 0;
+    border-radius: 999px;
+    padding: .15rem .45rem;
+    background: rgba(255,255,255,.15);
+    color: #fff;
+    cursor: pointer;
+  }
+  .clear-select:hover { background: rgba(255,255,255,.3); }
+  .clear-select:focus { outline: 2px solid #fff; outline-offset: 2px; }
 	/* -------------------- "All" button -------------------- */
 	.all {
 		/* background-color: #444; */
