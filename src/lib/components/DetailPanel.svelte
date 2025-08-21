@@ -41,8 +41,8 @@
 		{#each Object.entries($selectedElement.materials) as [materialName, materialData]}
 			{#if materialData.applications}
 				<details>
-					<summary>{materialName}</summary>
-					<ul>
+					<summary class="summaryName">{materialName}</summary>
+					<ul class="summaryDetails">
 						{#each materialData.applications.split(';').map((a) => a.trim()) as app}
 							<li>{app}</li>
 						{/each}
@@ -69,13 +69,15 @@
 		padding: 2rem;
 	}
 
-	/* #charts {
-		display: flex;
-		gap: 1rem;
-		align-items: stretch;
-	}
-	#charts > * {
-		flex: 1 1 0; 
-		min-width: 0; 
-	} */
+	p {
+    font-size: 1.25rem;
+  }
+
+  .summaryName {
+    font-size: 1.125rem;
+  }
+
+  .summaryDetails {
+    font-size: 1.125rem;
+  }
 </style>
