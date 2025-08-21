@@ -69,13 +69,7 @@
 		padding: 2rem;
 	}
 
-	/* #charts {
-		display: flex;
-		gap: 1rem;
-		align-items: stretch;
-	}
-	#charts > * {
-		flex: 1 1 0; 
-		min-width: 0; 
-	} */
+	p {
+    font-size: 1.25rem;
+  }
 </style>
