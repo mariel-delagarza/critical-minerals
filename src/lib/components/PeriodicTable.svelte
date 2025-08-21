@@ -19,7 +19,8 @@
   }
 
   function shouldHighlight(element) {
-    if (selectedCountry) return true; // when country filter is active we handle highlight via classes
+    // We dim/outline via classes; highlight stays true unless list filters say otherwise
+    if (selectedCountry) return true;
     if (activeFilter === 'all') return true;
     if (activeFilter === 'doi') return element['2022_doi_list'];
     if (activeFilter === 'doe') return element.doe_critical_mineral;
@@ -113,27 +114,37 @@
 
   <div class="periodic-grid">
     {#each dataArraySorted as element}
-      {@const isOnList =
-        element['2022_doi_list'] ||
-        element.doe_critical_mineral ||
-        element.dla_materials_of_interest}
+      {@const onDOI = !!element['2022_doi_list']}
+      {@const onDOE = !!element.doe_critical_mineral}
+      {@const onDLA = !!element.dla_materials_of_interest}
+      {@const onAny = onDOI || onDOE || onDLA}
 
+      <!-- Enable only when the element matches the CURRENT list filter -->
+      {@const enabled =
+        activeFilter === 'doi' ? onDOI :
+        activeFilter === 'doe' ? onDOE :
+        activeFilter === 'dla' ? onDLA :
+        activeFilter === 'nir' ? onAny :  /* in NIR, use the "in scope" set */
+        /* 'all' or default */   onAny}
+
+      <!-- NIR bins are independent of the DOE/DOI/DLA view -->
       {@const nirBins =
-        isNetExporter(element)              ? ['bNEG']   :
-        (isOnList && isNotAvailable(element)) ? ['bNotAv'] :
-        isOnList                            ? nirBinsForElement(element) :
-                                              ['bNA']}
+        isNetExporter(element)                ? ['bNEG']   :
+        (onAny && isNotAvailable(element))    ? ['bNotAv'] :
+        onAny                                 ? nirBinsForElement(element) :
+                                                ['bNA']}
 
       <button
         type="button"
         class="cell
                {activeFilter === 'nir' ? `nir ${nirBins.join(' ')}` : ''}
-               {selectedCountry && !matchesCountry(element) ? 'is-dim' : ''}
-               {selectedCountry &&  matchesCountry(element) ? 'is-match' : ''}"
-        style="grid-column: {element.xpos}; grid-row: {element.ypos};"
-        on:click={() => selectedElement.set(element)}
-        aria-label={isOnList ? `Select ${element.name}` : `${element.name} (not selectable)`}
-        disabled={!isOnList}
+               {!enabled ? 'is-disabled' : ''}
+               {selectedCountry && enabled && !matchesCountry(element) ? 'is-dim' : ''}
+               {selectedCountry && enabled &&  matchesCountry(element) ? 'is-match' : ''}"
+        style="grid-column:{element.xpos}; grid-row:{element.ypos};"
+        on:click={() => enabled && selectedElement.set(element)}
+        aria-label={enabled ? `Select ${element.name}` : `${element.name} (not selectable)`}
+        disabled={!enabled}
       >
         <Element {element} {activeFilter} highlight={shouldHighlight(element)} {nirBins} />
       </button>
