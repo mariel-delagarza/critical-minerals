@@ -14,8 +14,8 @@
 			<div class="footer__address">
 				<p>Connect with me:</p>
 				<ul class="footer__links">
-					<li><a href="https://github.com/mariel-delagarza">GitHub</a></li>
-					<li><a href="https://bsky.app/profile/mariel.bsky.social">BlueSky</a></li>
+					<li><a href="https://github.com/mariel-delagarza" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+					<li><a href="https://bsky.app/profile/mariel.bsky.social" target="_blank" rel="noopener noreferrer">BlueSky</a></li>
 					<li><a href="mailto:mariel.code@gmail.com">Email</a></li>
 				</ul>
 			</div>
@@ -57,11 +57,6 @@
 	.footer__copyright {
 		font-size: 0.875rem;
 		color: #aaa;
-	}
-
-	.footer__copyright a {
-		color: #fff;
-		text-decoration: underline;
 	}
 
 	.footer__links {

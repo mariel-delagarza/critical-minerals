@@ -68,23 +68,22 @@
 	</p>
 	<h2>Lists</h2>
 	<p>
-		There are two official lists of critical minerals, published by the Department of Interior (DOI)
-		through the U.S. Geological Survey (USGS) and the Department of Energy (DOE). These are the
+		There are two official lists of critical minerals, published by the Department of Interior
+		through the U.S. Geological Survey (USGS) and the Department of Energy. These are the
 		result of determinations made according to the definitions above.
 There's also a quasi-official list published by the Department of Defense's Defense Logistics
-		Agency, called "Materials of Interest."<sup class="footnote"><a href="#foonote6">6</a></sup>
+		Agency (DLA), called "Materials of Interest."<sup class="footnote"><a href="#foonote6">6</a></sup>
 	</p>
 	<p>
-		In 2022, the DOI, through the U.S. Geological Survey (USGS) released its List of Critical
+		In 2022, USGS released its List of Critical
 		Minerals "based on directives from the Energy Act of 2020."<sup class="footnote"
 			><a href="#footnote4">7</a></sup
 		>
-		In 2023, the Department of Energy followed with its own list. It includes minerals that are specifically
-		important to energy applications, "as well as those on critical minerals on the 2022 final list"
-		of the U.S. Geological Survey.<sup class="footnote"><a href="#footnote5">8</a></sup>
+		In 2023, DOE followed with its own list. It includes minerals that are specifically
+		important to energy applications, "as well as those on critical minerals on the [USGS] 2022 final list".<sup class="footnote"><a href="#footnote5">8</a></sup>
 	</p>
 	<p>
-		The Defense Logistics Agency (DLA) Strategic Materials office is the part of DOD that “is
+		The DLA Strategic Materials office is the part of DOD that “is
 		responsible for providing safe, secure, and environmentally sound stewardship for strategic and
 		critical materials in the United States National Defense Stockpile (NDS).”<sup class="footnote"
 			><a href="#footnote9">9</a></sup

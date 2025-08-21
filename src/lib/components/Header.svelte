@@ -27,29 +27,15 @@
 		margin-bottom: 0.5rem;
     color: white;
 	}
-
-	.subtitle {
-		font-size: 1rem;
-		color: white;
-		margin: 0;
-	}
 	@media (max-width: 768px) {
 		h1 {
 			font-size: 1.8rem;
-		}
-
-		.subtitle {
-			font-size: 1rem;
 		}
 	}
 
 	@media (max-width: 480px) {
 		h1 {
 			font-size: 1.5rem;
-		}
-
-		.subtitle {
-			font-size: 0.95rem;
 		}
 	}
 </style>

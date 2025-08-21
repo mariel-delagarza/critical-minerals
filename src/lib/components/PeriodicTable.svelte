@@ -43,14 +43,27 @@
 				.filter((v) => Number.isFinite(v))
 				.map(binFor)
 		);
-		// If truly no 2024 values:
-		if (!bins.size) bins.add('bNA');
-		return Array.from(bins); // e.g. ['b26_75'] or ['b26_75','b76_99']
+		return Array.from(bins); // no fallback here
 	}
 
 	function isNetExporter(el) {
 		return Object.values(el?.materials ?? {}).some((m) => m?.['2024']?.netExporter === true);
 	}
+
+	function isNotAvailable(el) {
+		const mats = Object.values(el?.materials ?? {});
+		// Do NOT treat "no materials" as Not Available — that's your existing bNA case.
+		if (!mats.length) return false;
+
+		// Return true only if EVERY material’s 2024 value is null/undefined
+		return mats.every((m) => m?.['2024']?.value == null);
+	}
+
+	// ✅ Sort for keyboard tab order (row-major: y then x). Visual positions stay via grid-row/column.
+	$: dataArraySorted = (dataArray ?? []).slice().sort((a, b) => {
+		if (a.ypos !== b.ypos) return a.ypos - b.ypos;
+		return a.xpos - b.xpos;
+	});
 
 	onMount(() => {
 		const update = () => (wrapperHeight = wrapperEl?.clientHeight ?? 0);
@@ -63,6 +76,7 @@
 
 <div class="table-wrapper periodic-table" bind:this={wrapperEl}>
 	<TableButtons {activeFilter} on:filterChange={(e) => setFilter(e.detail.id)} />
+
 	{#if activeFilter === 'nir'}
 		<div class="nir-legend">
 			<strong>Net Import Reliance (2024):</strong>
@@ -71,26 +85,36 @@
 				<li><span class="swatch b26_75"></span> 26–75%</li>
 				<li><span class="swatch b76_99"></span> 76–99%</li>
 				<li><span class="swatch b100"></span> 100%</li>
-				<li><span class="swatch bNA"></span> Data not available</li>
-        <li><span class="swatch bNEG"></span> Net exporter</li>
+				<li><span class="swatch bNotAv"></span> No 2024 data</li>
+				<li><span class="swatch bNEG"></span> Net exporter</li>
 			</ul>
 		</div>
 	{/if}
 
 	<div class="periodic-grid">
-		{#each dataArray as element}
+		{#each dataArraySorted as element}
 			{@const isOnList =
 				element['2022_doi_list'] ||
 				element.doe_critical_mineral ||
 				element.dla_materials_of_interest}
+
 			<!-- get all bins for this element -->
-			{@const nirBins = isNetExporter(element) ? ['bNEG'] : nirBinsForElement(element)}
-			<!-- DEBUG: log bins -->
+			{@const nirBins = isNetExporter(element)
+				? ['bNEG']
+				: isOnList && isNotAvailable(element)
+					? ['bNotAv']
+					: isOnList
+						? nirBinsForElement(element)
+						: ['bNA']}
+
+			<!-- DEBUG: log bins (kept as no-op) -->
 			{@html (() => {
 				// console.log(element.symbol || element.name, nirBins);
 				return '';
 			})()}
+
 			<button
+				type="button"
 				class="cell {activeFilter === 'nir' ? `nir ${nirBins.join(' ')}` : ''}"
 				style="grid-column: {element.xpos}; grid-row: {element.ypos};"
 				on:click={() => selectedElement.set(element)}
@@ -118,14 +142,18 @@
 	.cell:disabled {
 		color: #808080;
 	}
+
 	.cell:focus-visible {
-		outline: 2px solid #333;
+		outline: 3px solid #0ea5e9; /* tweak to your palette */
+		outline-offset: 2px;
 	}
+
 	.table-wrapper {
 		outline: 1px solid green;
 		container-type: inline-size;
 		container-name: table;
 	}
+
 	.periodic-grid {
 		display: grid;
 		--cell: 3.75rem;
@@ -182,13 +210,14 @@
 	.nir-legend .b100 {
 		background: #074e67;
 	}
-	.nir-legend .bNA {
-		background: #fff;
-		border: 1px solid #ccc;
+
+	.nir-legend .bNotAv {
+		background: #ccc; /* light gray */
+		border: 1px solid #d1d5db; /* optional hairline */
 	}
 
 	.nir-legend .bNEG {
-		background: #ccc; /* Or your preferred neutral gray */
+		background: #ccc;
 	}
 
 	.bNEG {
@@ -212,6 +241,7 @@
 			--cell: 2.75rem;
 		} /* 44px (AA floor) */
 	}
+
 	@container table (max-width: 980px) {
 		.table-wrapper {
 			overflow-x: auto;
@@ -237,7 +267,6 @@
 			overflow-x: auto;
 			max-width: 100%;
 		}
-
 		.periodic-grid {
 			width: max-content;
 		}
