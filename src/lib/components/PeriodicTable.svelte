@@ -88,7 +88,7 @@
 		{activeFilter}
 		{importCountries}
 		{selectedCountry}
-    on:filterChange={(e) => setFilter(e.detail.id)}
+		on:filterChange={(e) => setFilter(e.detail.id)}
 		on:countryChange={(e) => {
 			// dropdown selection
 			selectedCountry = e.detail.country || '';
@@ -248,6 +248,28 @@
 	}
 	.nir-legend .bNEG {
 		background: #ccc;
+	}
+	/* Keep keyboard focus for non-NIR views */
+	.cell:focus-visible {
+		outline: 3px solid #0ea5e9;
+		outline-offset: 2px;
+	}
+
+	/* NIR hover/focus indicator: white ring + teal ring */
+	.cell.nir:hover,
+	.cell.nir:focus-visible {
+		outline: none; /* override the default */
+		box-shadow:
+			0 0 0 3px #fff,
+			/* inner white ring for contrast */ 0 0 0 6px #0ea5e9; /* outer teal ring */
+		z-index: 1; /* sit above neighbors */
+	}
+
+	/* (optional) tiny lift on hover; disabled for reduced motion users */
+	@media (prefers-reduced-motion: no-preference) {
+		.cell.nir:hover {
+			transform: translateZ(0) scale(1.015);
+		}
 	}
 
 	@container table (max-width: 1400px) {
