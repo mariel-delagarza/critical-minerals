@@ -210,10 +210,6 @@
 	.nir-legend .b100 {
 		background: #074e67;
 	}
-	.nir-legend .bNA {
-		background: #fff;
-		border: 1px solid #ccc;
-	}
 
 	.nir-legend .bNotAv {
 		background: #ccc; /* light gray */
