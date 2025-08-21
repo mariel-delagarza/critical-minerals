@@ -64,9 +64,10 @@
 		b76_99: '#2e8da5',
 		b100: '#074e67',
 		bNA: '#fff',
-		bNEG: '#888'
+		bNEG: '#888',
+		bNotAv: '#ccc' // NEW
 	};
-	const ORDER = ['b0_25', 'b26_75', 'b76_99', 'b100', 'bNEG', 'bNA'];
+	const ORDER = ['b0_25', 'b26_75', 'b76_99', 'b100', 'bNEG', 'bNotAv', 'bNA']; // NEW order entry
 
 	let binsArr = []; // <-- ALL bins for this element
 	let nirStyle = ''; // inline background
@@ -224,6 +225,12 @@
 	.bNEG {
 		background-color: #888;
 		font-style: italic;
+	}
+
+	.bNotAv {
+		background-color: #ccc; /* light gray distinct from white bNA */
+		color: #000;
+		font-style: italic; /* optional to differentiate visually */
 	}
 
 	/* -------------------- DOI, DOE, DLA ------------------- */

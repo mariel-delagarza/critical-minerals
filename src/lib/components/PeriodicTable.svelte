@@ -43,13 +43,20 @@
 				.filter((v) => Number.isFinite(v))
 				.map(binFor)
 		);
-		// If truly no 2024 values:
-		if (!bins.size) bins.add('bNA');
-		return Array.from(bins); // e.g. ['b26_75'] or ['b26_75','b76_99']
+		return Array.from(bins); // no fallback here
 	}
 
 	function isNetExporter(el) {
 		return Object.values(el?.materials ?? {}).some((m) => m?.['2024']?.netExporter === true);
+	}
+
+	function isNotAvailable(el) {
+		const mats = Object.values(el?.materials ?? {});
+		// Do NOT treat "no materials" as Not Available — that's your existing bNA case.
+		if (!mats.length) return false;
+
+		// Return true only if EVERY material’s 2024 value is null/undefined
+		return mats.every((m) => m?.['2024']?.value == null);
 	}
 
 	// ✅ Sort for keyboard tab order (row-major: y then x). Visual positions stay via grid-row/column.
@@ -78,8 +85,8 @@
 				<li><span class="swatch b26_75"></span> 26–75%</li>
 				<li><span class="swatch b76_99"></span> 76–99%</li>
 				<li><span class="swatch b100"></span> 100%</li>
+				<li><span class="swatch bNotAv"></span> No 2024 data</li>
 				<li><span class="swatch bNEG"></span> Net exporter</li>
-				<li><span class="swatch bNA"></span>Not a critical mineral</li>
 			</ul>
 		</div>
 	{/if}
@@ -92,7 +99,13 @@
 				element.dla_materials_of_interest}
 
 			<!-- get all bins for this element -->
-			{@const nirBins = isNetExporter(element) ? ['bNEG'] : nirBinsForElement(element)}
+			{@const nirBins = isNetExporter(element)
+				? ['bNEG']
+				: isOnList && isNotAvailable(element)
+					? ['bNotAv']
+					: isOnList
+						? nirBinsForElement(element)
+						: ['bNA']}
 
 			<!-- DEBUG: log bins (kept as no-op) -->
 			{@html (() => {
@@ -201,6 +214,12 @@
 		background: #fff;
 		border: 1px solid #ccc;
 	}
+
+	.nir-legend .bNotAv {
+		background: #ccc; /* light gray */
+		border: 1px solid #d1d5db; /* optional hairline */
+	}
+
 	.nir-legend .bNEG {
 		background: #ccc;
 	}
