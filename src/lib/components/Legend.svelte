@@ -68,10 +68,10 @@
 	</p>
 	<h2>Lists</h2>
 	<p>
-		There are two official lists of critical minerals, published by the Department of Interior
+		There are two official lists specifically for critical minerals, published by the Department of Interior
 		through the U.S. Geological Survey (USGS) and the Department of Energy. These are the result of
-		determinations made according to the definitions above. There's also a quasi-official list
-		published by the Department of DOD's Defense Logistics Agency (DLA), called "Materials of
+		determinations made according to the definitions above. There's also a list
+		published by the DOD's Defense Logistics Agency (DLA), called "Materials of
 		Interest."<sup class="footnote"><a href="#foonote6">6</a></sup>
 	</p>
 	<p>
